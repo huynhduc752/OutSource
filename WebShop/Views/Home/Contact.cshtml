@@ -1,17 +1,340 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<section class="contact-us container">
+    <div class="w-75">
+        <div class="head-page bd-bt-img">
+            <h4>Inquiry/Order Form</h4>
+        </div>
+        <div class="step-number d-flex justify-content-between align-items-center">
+            <div class="text-white step">
+                <h4> Step 1</h4>
+            </div>
+            <div>
+                <sup class="text-red">* </sup>Mandatory fields
+            </div>
+        </div>
+        <form>
+            <div class="row">
+                <div class="col-6 col-lg-3">
+                    <div class="title-input d-flex align-items-center justify-content-between row-input">
+                        <h5> Email</h5>
+                        <h5 class="text-red">*</h5>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-9">
+                    <div class="d-flex justify-content-between row-input">
+                        <div class="w-80">
+                            <input type="email" class="w-100 form-control" name="email" placeholder="Please enter your email ID" />
+                        </div>
+                        <div class="w-20 bg-red">
+                            <button class="btn btn-sub-mit bg-red text-white">PROCEED</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="content-row">
+                        <p>
+                            Enter the email id you want to register or already registered with us.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    </div>
+    <div class="w-75">
+        <div class="step-number d-flex justify-content-between align-items-center">
+            <div class="text-white step">
+                <h4>
+                    Step 2 - Enter Order Details
+                </h4>
+            </div>
+        </div>
+        <div class="head-page bd-bt-img d-flex pt-3">
+            <span class="text-red mr-2"><i class="fas fa-dot-circle "></i></span>
+            <h5 class="my-0">Upload Files</h5>
+        </div>
+        <form>
+            <div>
+                <div class="head-form d-flex justify-content-between align-items-center">
+                    <p>Files for Editing</p>
+                    <p class="content-row">
+                        <span class="mr-2"><i class="fas fa-lock"></i></span>
+                        256 bit-encryption
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center align-items-center bg-f1 p-3 mt-1">
+                    <p>Drag and drop your files here or </p>
+                    <input type="file" name="uploadFile" />
+                </div>
+            </div>
+        </form>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        <form>
+            <div>
+                <div class="head-page bd-bt-img d-flex pt-3">
+                    <span class="text-red mr-2"><i class="fas fa-dot-circle "></i></span>
+                    <h5 class="my-0">Select Service and Plan</h5>
+                </div>
+                <div class="row ">
+                    <div class="col-6 col-lg-3">
+                        <div class="title-input h-75 d-flex align-items-center justify-content-between row-input">
+                            <h5> Service</h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9">
+                        <div class="d-flex  row-input radio-input radio-select">
+                            <div class="w-auto">
+                                <input type="radio" name="service" class="mr-3" />
+                                <label>Top Impact Editing</label>
+                            </div>
+                            <div class="w-auto">
+                                <input type="radio" name="service" class="mr-3" />
+                                <label>Substantive Editing</label>
+                            </div>
+                            <div class="w-auto">
+                                <input type="radio" name="service" class="mr-3" />
+                                <label>Substantive Editing</label>
+                            </div>
+                            <div class="w-auto ">
+                                <input type="radio" name="service" class="mr-3" />
+                                <label>Substantive Editing</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3">
+                        <div class="title-input d-flex align-items-center justify-content-between">
+                            <h5> Delivery Options</h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9">
+                        <div class="d-flex ">
+                            <div class="w-100">
+                                <select class="w-100 form-control">
+                                    <option value="1">6 day</option>
+                                    <option value="2">5 day</option>
+                                    <option value="3">4 day</option>
+                                    <option value="4">3 day</option>
+                                    <option value="5">2 day</option>
+                                    <option value="6">1 day</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 mt-2">
+                        <div class="title-input  d-flex align-items-center justify-content-between">
+                            <h5> Dealine</h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9 mt-2">
+                        <div class="d-flex radio-input  d-flex align-items-center justify-content-between">
+
+                            <div class="w-50 ">
+                                <input type="date" name="date" class="form-control" />
+                            </div>
+                            <div class="w-50 ">
+                                <input type="time" name="time" class="form-control" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="head-page bd-bt-img d-flex pt-3">
+                    <span class="text-red mr-2"><i class="fas fa-dot-circle "></i></span>
+                    <h5 class="my-0">Add-Ons & Free Services</h5>
+                </div>
+                <div class="row ">
+                    <div class="col-6 col-lg-3">
+                        <div class="title-input h-75 d-flex align-items-center justify-content-between row-input">
+                            <h5> Add-Ons</h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9">
+                        <div class="d-flex h-75 row-input radio-input d-flex align-items-center justify-content-between">
+                            <div class="w-80">
+                                <input type="checkbox" name="service" />
+                                <label class="mb-0">Plagiarism Check iThenticate </label>
+                            </div>
+                            <div class="w-20">
+                                <p class="mb-0 text-right">$100</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 ">
+                        <div class="title-input h-100 d-flex align-items-center justify-content-between">
+                            <h5>Free Services</h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9 ">
+                        <div class="d-flex ">
+                            <div class="w-100 d-flex align-items-center justify-content-between radio-input radio-select">
+                                <div class="w-50 mr-0">
+                                    <input type="checkbox" name="service" class="mr-3" />
+                                    <label>Edit Unlimited</label>
+                                </div>
+                                <div class="w-50 mr-0">
+                                    <input type="checkbox" name="service" class="mr-3" />
+                                    <label>Rejection Shield</label>
+                                </div>
+                                <div class="w-50 mr-0">
+                                    <input type="checkbox" name="service" class="mr-3" />
+                                    <label>Cover Letter</label>
+                                </div>
+                                <div class="w-50 mr-0">
+                                    <input type="checkbox" name="service" class="mr-3" />
+                                    <label>Manuscript Rate Card</label>
+                                </div>
+                                <div class="w-50 mr-0">
+                                    <input type="checkbox" name="service" class="mr-3" />
+                                    <label>Certificate Of Editing</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="head-page bd-bt-img d-flex pt-3">
+                    <span class="text-red mr-2"><i class="fas fa-dot-circle "></i></span>
+                    <h5 class="my-0">Subject Area & Journal Details</h5>
+                </div>
+                <div class="row ">
+                    <div class="col-6 col-lg-3">
+                        <div class="title-input h-75 d-flex align-items-center justify-content-between row-input">
+                            <h5>Subject/Industry Area</h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9">
+                        <div class="d-flex h-75 row-input radio-input d-flex align-items-center justify-content-between">
+                            <div class="w-80">
+                                <input type="text" class="form-control" placeholder="Enter the subject of the text to be edited" name="subject" />
+                            </div>
+                            <div class="w-20">
+                                <p class="mb-0 text-right">Can't find</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 ">
+                        <div class="title-input h-100 d-flex align-items-center justify-content-between">
+                            <h5>
+                                Order Instructions
+                            </h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9 ">
+                        <div class="d-flex ">
+                            <div class="w-100 d-flex align-items-center">
+                                <textarea rows="4" class="form-control" placeholder="Please mention instructions you want us to note."></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="head-page bd-bt-img d-flex pt-3">
+                    <span class="text-red mr-2"><i class="fas fa-dot-circle "></i></span>
+                    <h5 class="my-0">Other details</h5>
+                </div>
+                <div class="row ">
+                    <div class="col-6 col-lg-3">
+                        <div class="title-input row-input">
+                            <div class="d-flex align-items-center justify-content-between ">
+                                <h5>Personal Information</h5>
+                                <h5 class="text-red">*</h5>
+                            </div>
+                            <div>
+                                <p class="content-row d-flex align-items-center">
+                                    <span class="mr-2"><i class="fas fa-lock"></i></span>
+                                    <span class="font-1"> We respect your privacy. Your details are safe with us.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9">
+                        <div class="d-flex h-75 row-input radio-input d-flex align-items-center justify-content-between">
+                            <div class="w-48 mb-3">
+                                <input type="text" name="fullNameEnglish" class="form-control" placeholder="Full Name In English" />
+                            </div>
+                            <div class="w-48 mb-3">
+                                <input type="text" name="alternateEmailId" class="form-control" placeholder="Alternate email ID " />
+                            </div>
+                            <div class="w-48 mb-3 d-flex">
+                                <input type="text" name="time" class="form-control w-20" placeholder="+84" readonly />
+                                <input type="text" name="time" class="form-control w-80" pattern="Mobile Number" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 ">
+                        <div class="title-input h-100 d-flex align-items-center justify-content-between">
+                            <h5>
+                                Supervisor/Staff's email
+                            </h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9 mt-2 ">
+                        <div class="d-flex ">
+                            <div class="w-48 mb-3">
+                                <input type="text" name="fullNameEnglish" class="form-control" placeholder="Enter the email ID" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 mt-2">
+                        <div class="title-input h-100 d-flex align-items-center justify-content-between">
+                            <h5>
+                                Name of Payer
+                            </h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9 mt-2">
+                        <div class="d-flex ">
+                            <div class="w-100 mb-3">
+                                <input type="text" name="fullNameEnglish" class="form-control" placeholder="Please enter the name of the payer that should appear on the invoice" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-lg-3 mt-2">
+                        <div class="title-input h-100 d-flex align-items-center justify-content-between">
+                            <h5>
+                                Payment Instructions
+                            </h5>
+                            <h5 class="text-red">*</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-9 mt-2 ">
+                        <div class="d-flex ">
+                            <div class="w-100 d-flex align-items-center">
+                                <textarea rows="4" class="form-control" placeholder="Please mention any other payment-related instructions here"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

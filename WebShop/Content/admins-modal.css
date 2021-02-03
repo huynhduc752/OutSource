@@ -1,0 +1,235 @@
+﻿
+.modal {
+    text-align: center;
+    padding: 0 !important;
+}
+
+    .modal:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+    }
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.modal-header, .modal-footer {
+    padding: 1.5rem 1rem .75rem 1rem !important;
+}
+
+.modal-content {
+    border-radius: 0px !important;
+}
+
+.modal-footer {
+    text-align: center;
+}
+
+    .modal-footer > * {
+        /* margin: 0 !important; */
+    }
+
+.modal-lg {
+    width: 1000px;
+}
+
+.modal-header .close {
+    display: inline-block;
+    margin-top: 0px;
+    margin-right: 0px;
+    width: 9px;
+    height: 9px;
+    background-repeat: no-repeat !important;
+    text-indent: -10000px;
+    outline: none;
+    background: url(../images/remove-icon-small.png) center center;
+    padding: 0.75rem 0.65rem !important;
+}
+
+.modal-footer .btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    font-size: .95rem;
+    line-height: 1.2;
+    border-radius: 0rem !important;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+    .modal-footer .btn i {
+        font-size: .9rem;
+        margin-right: .3rem;
+        color: #ddd
+    }
+
+.modal-footer i {
+    font-size: .8rem;
+    margin-right: .12rem;
+    color: #343a40;
+    opacity: .88;
+}
+
+.modifying-object-modal label {
+    font-weight: 400 !important;
+}
+
+.modal-body label {
+    font-size: .9rem !important;
+    color: #343a40 !important;
+}
+
+    .modal-body label span {
+        font-size: .95rem !important;
+        color: #cb5a5e !important;
+    }
+
+.form-group {
+    margin-bottom: 7px !important;
+}
+
+.form-control {
+    height: 28px;
+    line-height: 1.333;
+    padding: 4px 7px;
+    font-size: 13px;
+    border: 1px solid #dedede;
+    border-radius: 0px !important;
+}
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: none !important;
+    }
+
+.btn:focus, .btn.focus {
+    color: #fff;
+    border-color: #80bdff;
+    box-shadow: none !important;
+}
+
+h4.modal-title, h4 i {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+h4 i {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.58);
+    margin-right: .3rem;
+}
+
+#confirm-modal .modal-title i {
+    color: #cb5a5e;
+}
+
+#confirm-modal .modal-dialog {
+    width: 420px !important;
+}
+
+#confirm-modal .modal-body i, #confirm-modal-selected .modal-body i {
+    color: #cb5a5e;
+    font-size: 5rem;
+}
+
+#message-modal .modal-title i {
+    color: #26a69a;
+}
+
+#message-modal .modal-dialog {
+    width: 420px !important;
+}
+
+#message-modal .modal-body i {
+    color: #26a69a;
+    font-size: 5rem;
+}
+
+#message-toast {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    border: none;
+    height: 0;
+    z-index: 9999;
+}
+
+    #message-toast .toast {
+        visibility: hidden;
+        background-color: #26a69a;
+        color: #fff;
+        z-index: 0 !important;
+        height: 0;
+    }
+
+    #message-toast .show {
+        visibility: visible;
+        background-color: #26a69a;
+        color: #fff;
+        height: auto;
+        z-index: 999;
+    }
+
+    #message-toast .face:not(.show) {
+        visibility: hidden !important;
+    }
+
+    #message-toast .face {
+        opacity: 1 !important;
+    }
+
+    #message-toast .toast-header {
+        background-color: #26a69a;
+        border-radius: 0;
+        color: #fff;
+    }
+
+    #message-toast .toast-body .message-content {
+        font-size: .85rem !important;
+        padding: .1rem .5rem;
+        opacity: .8;
+        width: 280px;
+    }
+
+/* Chọn danh sách cột hiển thị */
+.select-display {
+    display: block;
+}
+/*../End -  Chọn danh sách cột hiển thị */
+
+/* responsive large */
+@media (min-width: 1025px) {
+    .modal-dialog {
+        width: 680px !important;
+        margin: 5px auto !important;
+    }
+}
+
+@media (min-width: 1025px) {
+    .modal-dialog {
+        max-width: 680px !important;
+        margin: 5px auto !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width:1024px) {
+    .modal-dialog {
+        width: 550px !important;
+        margin: 5px auto !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width:1024px) {
+    .modal-dialog {
+        max-width: 550px !important;
+        margin: 5px auto !important;
+    }
+}
+/* ../End - responsive large */

@@ -1,40 +1,351 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="no-js" lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+
+
+    <link href="~/Content/css/layout.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap4/css/bootstrap.min.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="~/Content/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/slick-master/slick/slick-theme.css" rel="stylesheet" />
+    <link href="~/Content/slick-master/slick/slick.css" rel="stylesheet" />
+    <link href="~/Content/font/font.css" rel="stylesheet" />
+    <link href="~/Content/css/data.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="~/Content/js/zoom/js/vendor/modernizr.js"></script>
+    <script src="~/Content/js/zoom/js/vendor/jquery.js"></script>
+    <script src="~/Content/js/zoom/xzoom.min.js"></script>
+    <link href="~/Content/js/zoom/css/xzoom.css" rel="stylesheet" media="all" />
+
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body class="pt-0">
+    <header class="container-fluid">
+        <div class="tab-menu-mb">
+            <div class="d-lg-none position-relative menu-mobile" data-display="0">
+                <span class="tab-mobile"></span>
+                <span class="tab-mobile"></span>
+                <span class="tab-mobile"></span>
+                
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+            <div class="header d-flex justify-content-between align-items-center" id="menu-mb">
+                <div class="d-moblie">
+                    <ul class="d-flex justify-content-between">
+
+                        <li class="menu-one"><a href="#">TRANG CHỦ</a></li>
+                        <li class="menu-one">
+                            <a href="#">SẢN PHẨM <span><i class="fas fa-chevron-down ml-2"></i></span></a>
+                            <ul class="menu-two d-none">
+                                <li>
+                                    <a href="#">Áo Sơ Mi</a>
+                                </li>
+                                <li>
+                                    <a href="#">Áo Vest</a>
+                                </li>
+                                <li>
+                                    <a href="#">Áo Măng Tô</a>
+                                </li>
+                                <li>
+                                    <a href="#">Đầm trơn</a>
+                                </li>
+                                <li>
+                                    <a href="#">Đầm Ren</a>
+                                </li>
+                                <li>
+                                    <a href="#">Jumpsuit/ Set bộ</a>
+                                </li>
+                                <li>
+                                    <a href="#">Chân Váy</a>
+                                </li>
+                                <li>
+                                    <a href="#">Quần</a>
+                                </li>
+                                <li>
+                                    <a href="#">Phụ kiện</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-one">
+                            <a href="#">BỘ SƯU TẬP <span><i class="fas fa-chevron-down ml-2"></i></span></a>
+                            <div class="menu-two d-none">
+                                <div class="d-flex">
+                                    <ul class="">
+                                        <li>
+                                            <a href="#">ALLURING </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">JEALOUS BEAUTY </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">HAPPY DAY </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">GORGEOUS LADY/LOOKBOOK</a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#">GONE WITH THE WIND/NEW LOOKBOOK</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">SUNSHINE MOMENT</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">TROPICAL FLOW/LOOKBOOK</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Step shift yourself </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Ngày gió mùa</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Mùa Tháng 9 Heo May</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Khúc xuân sang 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Cuộc hẹn mùa thu/Lookbook</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Pre - Fall Winter 2019</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">New Arrivals </a>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Nắng tháng 5</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Ngày nắng</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">IQueen - The Mystery </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Sound from the Sun</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Giấc mộng xuân hè 2019</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">I Queen - Loving U</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Khúc giao mùa tinh khôi</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Những ngày tháng 9</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Dances of the sun rays</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Mộng tưởng về Ren</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Floral</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Khi Tháng 4 về</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-none d-lg-block">
+                    <a href="#">
+                        <img src="~/Content/images/thoi_trang/logo200.png" />
+                    </a>
+                </div>
+                <div class="d-moblie">
+                    <ul class="d-flex justify-content-between">
+                        <li class="menu-one">
+                            <a href="#">THÔNG TIN <span><i class="fas fa-chevron-down ml-2"></i></span></a>
+                            <ul class="menu-two d-none">
+                                <li>
+                                    <a href="#">Tin tức - Sự kiện</a>
+                                </li>
+                                <li>
+                                    <a href="#">Hình ảnh - Video</a>
+                                </li>
+                                <li>
+                                    <a href="#">Chính sách chăm sóc khách hàng</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-one"><a href="#">LIÊN HỆ</a></li>
+                        <li class="menu-one"><a href="#">TÀI KHOẢN</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
+
+        <div class="d-lg-none logo-menu-moblie">
+            <a href="#">
+                <img class="h-100 w-100" src="~/Content/images/thoi_trang/logo200.png" />
+            </a>
+        </div>
+    </header>
+    <div>
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <p>@DateTime.Now - My ASP.NET Application</p>
+
+                    </div>
+                    <div class="">
+                        <a href="#">
+                            <img src="~/Content/images/thoi_trang/logo200.png" />
+                        </a>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
+    @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+    @*<script src="~/Content/bootstrap4/js/bootstrap.bundle.min.js"></script>
+        <script src="~/Content/bootstrap4/js/bootstrap.min.js"></script>*@
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src="~/Content/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+    <script src="~/Content/js/all.min.js"></script>
+    <script src="~/Content/slick-master/slick/slick.min.js"></script>
+    <script src="~/Content/js/layout.js"></script>
+    <script src="~/Content/js/zoom/js/foundation.min.js"></script>
+    <script src="~/Content/js/zoom/js/setup.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(window).scroll(function (event) {
+                if ($(this).scrollTop() > 85) {
+                    $('.header').addClass("fixed-top");
+                    $('.header li.link-GAQ ').removeClass("d-none");
+                } else {
+                    $('.header ').removeClass("fixed-top");
+                    $('.header li.link-GAQ ').addClass("d-none");
+
+                }
+            });
+
+        });
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            autoplay: false,
+            slidesToShow: 4,
+            autoplayTimeout: 1500,
+            autoplayHoverPause: false,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 3
+                },
+                992: {
+                    items: 4
+                }
+            }
+        });
+        $('.regular-intro').slick({
+            loop: true,
+            dots: false,
+            infinite: true,
+            autoplay: true,
+            autoplayTimeout: 1500,
+            slidesToShow: 1,
+            nextArrow: "<img class='a-left control-c prev slick-next' src='../Content/images/home/right.png'>",
+            prevArrow: "<img class='a-left control-c prev slick-prev' src='../Content/images/home/left.png'>",
+            slidesToScroll: 1,
+
+        })
+        $('.regular-two-option').slick({
+            loop: true,
+            dots: false,
+            infinite: true,
+            autoplay: true,
+            autoplayTimeout: 1500,
+            slidesToShow: 2,
+            nextArrow: "<img class='a-left control-c prev slick-next' src='../Content/images/home/right.png'>",
+            prevArrow: "<img class='a-left control-c prev slick-prev' src='../Content/images/home/left.png'>",
+            slidesToScroll: 1,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 1
+                },
+                1200: {
+                    items: 2
+                }
+            }
+
+        })
+        $('.regular-edit').slick({
+            loop: true,
+            dots: false,
+            infinite: true,
+            autoplay: true,
+            autoplayTimeout: 1500,
+            slidesToShow: 4,
+            nextArrow: "<img class='a-left control-c prev slick-next' src='../Content/images/home/right.png'>",
+            prevArrow: "<img class='a-left control-c prev slick-prev' src='../Content/images/home/left.png'>",
+            slidesToScroll: 1,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                },
+                1500: {
+                    items: 4
+                }
+            }
+
+        })
+        $('.regular-title-item').slick({
+            loop: true,
+            dots: false,
+            infinite: true,
+            autoplay: true,
+            autoplayTimeout: 1500,
+            nextArrow: "<img class='a-left control-c prev slick-next' src='../Content/images/home/right.png'>",
+            prevArrow: "<img class='a-left control-c prev slick-prev' src='../Content/images/home/left.png'>",
+            slidesToScroll: 1,
+            responsive: [
+                {
+                    breakpoint: 2000,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 1,
+                    }
+                },
+                {
+                    breakpoint: 993,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }
+            ]
+        })
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
