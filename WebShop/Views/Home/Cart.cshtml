@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="cart container">
+    <div class="text-center head-title my-5">
+        <h4>
+            GIỎ HÀNG CỦA BẠN
+        </h4>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class=" cart-left">
+                <div class="title-cart d-flex justify-content-between text-center">
+                    <div class="w-25">
+                        <h6>Sản Phẩm</h6>
+                    </div>
+                    <div class="w-25">
+                        <h6>Số Lượng</h6>
+                    </div>
+                    <div class="w-25">
+                        <h6>Thành Tiền</h6>
+                    </div>
+                </div>
+                <div class="item d-flex justify-content-between align-items-center justify-content-center py-3">
+                    <div class="w-25 avt-pro">
+                        <div class="w-75 mx-auto">
+                            <img src="~/Content/images/thoi_trang/small-637428771695914453-DSC_9876.jpg" />
+                        </div>
+                    </div>
+                    <div class="w-50 so-luong ">
+                        <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
+                            <span class="number-add py-1 px-2">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="value-pro number-pro" data-value="1" data-pay="800000">1</span>
+                            <span class="number-sub py-1 px-2">
+                                <i class="fas fa-minus"></i>
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="w-25 money mx-auto text-center">
+                        <div data-money="800000" class="mx-3 py-1 thanh-tien" >
+                            <span class="here">800000</span><sup>vnđ</sup>
+                        </div>
+                    </div>
+                </div>
+                <div class="item d-flex justify-content-between align-items-center justify-content-center py-3">
+                    <div class="w-25 avt-pro">
+                        <div class="w-75 mx-auto">
+                            <img src="~/Content/images/thoi_trang/small-637428771695914453-DSC_9876.jpg" />
+                        </div>
+                    </div>
+                    <div class="w-50 so-luong ">
+                        <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
+                            <span class="number-add py-1 px-2">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="value-pro number-pro" data-value="1" data-pay="800000">1</span>
+                            <span class="number-sub py-1 px-2">
+                                <i class="fas fa-minus"></i>
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="w-25 money mx-auto text-center">
+                        <div data-money="800000" class="mx-3 py-1 thanh-tien" >
+                            <span class="here">800000</span><sup>vnđ</sup>
+                        </div>
+                    </div>
+                </div>
+                <div class="item d-flex justify-content-between align-items-center justify-content-center py-3">
+                    <div class="w-25 avt-pro">
+                        <div class="w-75 mx-auto">
+                            <img src="~/Content/images/thoi_trang/small-637428771695914453-DSC_9876.jpg" />
+                        </div>
+                    </div>
+                    <div class="w-50 so-luong ">
+                        <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
+                            <span class="number-add py-1 px-2">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="value-pro number-pro" data-value="1" data-pay="800000">1</span>
+                            <span class="number-sub py-1 px-2">
+                                <i class="fas fa-minus"></i>
+                            </span>
+
+                        </div>
+                    </div>
+                    <div class="w-25 money mx-auto text-center">
+                        <div data-money="800000" class="mx-3 py-1 thanh-tien" >
+                            <span class="here">800000</span><sup>vnđ</sup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="list-cart cart-right py-2">
+                <div class="tinh-tien my-1 px-3 pb-3">
+                    <div class="just-pay d-flex justify-content-between pt-2 pb-2">
+                        <div>TỔNG GIÁ TRỊ (VNĐ)</div>
+                        <div class="d-flex">
+                            <h6 class="money" id="tongTriGia" data-value="2400000">2,4000,00 </h6><sup style="font-weight:bold">vnđ</sup>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 luu-y">
+                    <div>
+                        <h6> Lưu ý / </h6>
+                        <div class="d_note-content">
+                            <ul class="ml-4">
+                                <li>
+                                    Giá này chưa bao gồm 10% VAT
+                                </li>
+                                <li>
+                                    Giao hàng trên toàn quốc
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <h6>Khuyến mãi đi kèm đơn hàng / </h6>
+                        <div class="d_note-content">
+                            <ul class="ml-4">
+                                <li>
+                                    Miễn phí vận chuyển toàn quốc.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-end  py-3">
+                        <div class="w-100 pt-2 pb-2 text-center confirm bg-black">
+                            <a class="login text-white " data-toggle="modal" data-target="#exampleModal">XÁC NHẬN ĐƠN HÀNG<i class="ml-2 fas fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">TÀI KHOẢN CỦA BẠN</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Họ và tên:</label>
+                                        <input type="text" class="form-control" name="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Email:</label>
+                                        <input type="text" class="form-control" name="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Địa chỉ:</label>
+                                        <input type="text" class="form-control" name="Address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Ghi chú:</label>
+                                        <textarea class="form-control" name="Notes"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Gửi</button>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+            //debugger;
+            let num = $('.number-pro').attr('data-value');
+            $('.number-pro').text(num);
+            let m = $('.number-pro').attr('data-pay');
+            let x = num * m;
+            $('.thanh-tien').attr('data-money', x);
+            let tt = $('.thanh-tien').attr('data-money');
+            $('.here').text(tt);
+
+
+        $('.cart .number-add').click(function () {
+            let temp = $('#tongTriGia').attr('data-value');
+                let res = $(this).siblings('.value-pro').attr('data-value');
+                let mon = $(this).siblings('.value-pro').attr('data-pay');
+            let money = parseInt(mon);
+            let pay = parseInt(temp);
+            let payment = pay + money;
+                res++;
+            let sum = res * money;
+            $('#tongTriGia').attr('data-value', payment);
+                $(this).siblings('.value-pro').attr('data-value', res);
+                $(this).siblings('.value-pro').text(res);
+                $(this).parent().parent().siblings('.money').children('.thanh-tien').attr('data-money', sum);
+            $(this).parent().parent().siblings('.money').children('.thanh-tien').children('.here').text(sum);
+            $('#tongTriGia').text(payment);
+            })
+        $('.cart .number-sub').click(function () {
+            let temp = $('#tongTriGia').attr('data-value');
+                let res = $(this).siblings('.value-pro').attr('data-value');
+                let mon = $(this).siblings('.value-pro').attr('data-pay');
+                let money = parseInt(mon);
+                let pay = parseInt(temp);
+            if (res > 0) {
+                let payment = pay - money;
+                    res--;
+                let sum = res * money;
+                $('#tongTriGia').attr('data-value', payment);
+                    $(this).siblings('.value-pro').attr('data-value', res);
+                    $(this).siblings('.value-pro').text(res);
+                    $(this).parent().parent().siblings('.money').children('.thanh-tien').attr('data-money', sum);
+                $(this).parent().parent().siblings('.money').children('.thanh-tien').children('.here').text(sum);
+                $('#tongTriGia').text(payment);
+                }
+
+            })
+    </script>
+    }

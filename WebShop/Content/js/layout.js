@@ -1,12 +1,11 @@
-$('.number-add').click(function () {
-    debugger;
+$('.page-detail .number-add').click(function () {
     let res = $(this).siblings('.value-pro').attr('data-value');
     res++;
     $(this).siblings('.value-pro').attr('data-value', res);
     $(this).siblings('.value-pro').text(res );
 
 })
-$('.number-sub').click(function () {
+$('.page-detail .number-sub').click(function () {
     let res = $(this).siblings('.value-pro').attr('data-value');
     if (res >0) {
         res--;
@@ -27,7 +26,6 @@ $('.title-in').click(function () {
     }
 })
     $('.menu-mobile').click(function () {
-        debugger;
         let dis = $(this).attr('data-display');
         if (dis == 0) {
             $('#menu-mb').addClass('menu-active')

@@ -1,21 +1,30 @@
 ﻿@media only screen and (min-width: 993px) and (max-width: 1200px) {
     header ul li {
-        padding: 2em 1em;
+        padding: 2em .25em;
     }
     #magnific #xzoom-magnific {
         width: 25rem !important;
     }
+    .d-moblie.w-30{
+        width:35%;
+    }
 }
-@media only screen and (min-width: 1201px) and (max-width: 1366px) {
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
     header ul li {
-        padding: 2em  !important;
+        padding: 2em 0.25em !important;
     }
 }
 @media (max-width: 992px) {
+    h4{
+        font-size: 1.75rem !important
+    }
     .sup-title {
         text-align: center;
         width: 50%;
         margin: 1rem auto;
+    }
+    .menu-two.d-none .d-flex{
+        display: block !important;
     }
 
     .supprice .w-75.justify-content-center {
@@ -25,7 +34,9 @@
     .slick-slide iframe {
         width: 100%;
     }
-
+    .d-moblie.w-30{
+        width: 100% !important;
+    }
     .supprice-news .row > div {
         margin-bottom: 1.5rem;
     }
@@ -103,7 +114,7 @@
         z-index: 999;
         left: 0;
         width: 85vw;
-        height: 50vh;
+        height: auto;
     }
 
     header ul li {
@@ -111,11 +122,12 @@
     }
 
     header .menu-two li {
-        padding: 2rem 3rem;
+        padding: 1rem 3rem;
     }
     #magnific #xzoom-magnific {
         width: auto !important;
     }
+   
 }
 
 

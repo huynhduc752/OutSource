@@ -26,5 +26,13 @@ namespace TKLTW.Controllers
 
             return View();
         }
+        public ActionResult Category()
+        {
+            return View();
+        }
+        public ActionResult Cart()
+        {
+            return View();
+        }
     }
 }
