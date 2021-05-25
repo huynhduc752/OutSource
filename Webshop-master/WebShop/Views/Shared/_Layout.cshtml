@@ -86,7 +86,7 @@
                                 <!--<li class="menu-one px-0">-->
                                 @*<a href="#">TÀI KHOẢN</a>*@
                                 <!--<a class="login " data-toggle="modal" data-target="#exampleModal">TÀI KHOẢN<i class="ml-2 fas fa-user"></i></a>
-                </li>-->
+                                </li>-->
                                 <li class="menu-one ">
                                     <a href="/Home/Cart">GIỎ HÀNG<i class="ml-2 fas fa-cart-plus"></i></a>
 
@@ -111,7 +111,7 @@
     </div>
     <footer>
         <div class="container">
-            
+
         </div>
     </footer>
     @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
@@ -125,6 +125,7 @@
     <script src="~/Content/js/layout.js"></script>
     <script src="~/Content/js/zoom/js/foundation.min.js"></script>
     <script src="~/Content/js/zoom/js/setup.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
         $(document).ready(function () {
@@ -249,66 +250,66 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            url: '/Home/GetCategory',
-            type: 'post',
-            dataType: 'json',
-            data: {
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Home/GetCategory',
+                type: 'post',
+                dataType: 'json',
+                data: {
 
-            },
-            success: function (res) {
-                let cate = res;
-                let row = ``;
-                $(cate).each(function (index, item) {
-                    row += `<li>
-                                    <a href="/danh-muc/${item.Slug}-${item.Id}">${item.Name}</a>
-                                </li>`;
-                });
+                },
+                success: function (res) {
+                    let cate = res;
+                    let row = ``;
+                    $(cate).each(function (index, item) {
+                        row += `<li>
+                                        <a href="/danh-muc/${item.Slug}-${item.Id}">${item.Name}</a>
+                                    </li>`;
+                    });
 
-                $('.menu-two').html('');
-                $('.menu-two').append(row);
+                    $('.menu-two').html('');
+                    $('.menu-two').append(row);
 
-            },
-            error: function (error) {
+                },
+                error: function (error) {
 
-            }
+                }
+            })
+
+            $.ajax({
+                url: '/Home/GetInformation',
+                type: 'post',
+                dataType: 'json',
+                data: {
+
+                },
+                success: function (res) {
+                    let row = `<div class="d-flex align-items-center justify-content-between">
+                                    <ul class="w-75">
+                                        <li><b>Địa Chỉ:</b> ${res.Address} </li>
+                                        <li><b>Hotline:</b> ${res.Phone}</li>
+                                        <li><b>Email:</b> ${res.Email}</li>
+                                    </ul>
+
+                                    <div class="logo-page ml-auto">
+                                        <a href="#">
+                                            <img class="" src="${res.Logo}" />
+                                        </a>
+                                    </div>
+                                </div>`;
+                    $('footer .container').append(row);
+                    $('.logoWeb').append(`<img src="${res.Logo}" />`)
+
+                },
+                error: function (error) {
+
+                }
+            })
+
+
         })
-
-        $.ajax({
-            url: '/Home/GetInformation',
-            type: 'post',
-            dataType: 'json',
-            data: {
-
-            },
-            success: function (res) {
-                let row = `<div class="d-flex align-items-center justify-content-between">
-                                <ul class="w-75">
-                                    <li><b>Địa Chỉ:</b> ${res.Address} </li>
-                                    <li><b>Hotline:</b> ${res.Phone}</li>
-                                    <li><b>Email:</b> ${res.Email}</li>
-                                </ul>
-
-                                <div class="logo-page ml-auto">
-                                    <a href="#">
-                                        <img class="" src="${res.Logo}" />
-                                    </a>
-                                </div>
-                            </div>`;
-                $('footer .container').append(row);
-                $('.logoWeb').append(`<img src="${res.Logo}" />`)
-
-            },
-            error: function (error) {
-
-            }
-        })
-
-        
-    })
-</script>
+    </script>
 
 </body>
 </html>

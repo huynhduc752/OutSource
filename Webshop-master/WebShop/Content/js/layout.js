@@ -1,8 +1,19 @@
-$('.page-detail .number-add').click(function () {
+﻿$('.page-detail .number-add').click(function () {
     let res = $(this).siblings('.value-pro').attr('data-value');
-    res++;
-    $(this).siblings('.value-pro').attr('data-value', res);
-    $(this).siblings('.value-pro').text(res );
+    let maxValue = $(this).siblings('.value-pro').attr('data-stock');
+    if (maxValue > res) {
+        res++;
+        $(this).siblings('.value-pro').attr('data-value', res);
+        $(this).siblings('.value-pro').text(res);
+    }
+    else {
+       
+        Swal.fire({
+            icon: 'error',
+            text: "Thật xin lỗi bạn, hiện gian hàng chỉ còn lại " + maxValue + " sản phẩm",
+        })
+    }
+
 
 })
 $('.page-detail .number-sub').click(function () {

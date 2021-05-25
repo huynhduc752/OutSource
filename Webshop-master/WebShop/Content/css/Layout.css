@@ -478,3 +478,7 @@ header .menu-two {
 .cart h6{
     font-weight: bold !important;
 }
+.page-detail .swal2-html-container {
+    font-size: 2rem;
+    font-weight: bold;
+}

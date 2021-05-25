@@ -61,7 +61,7 @@
                     </div>
                     <div class="btn-end  py-3">
                         <div class="w-100 pt-2 pb-2 text-center confirm bg-black">
-                            <a class="login text-white btnOk">XÁC NHẬN ĐƠN HÀNG<i class="ml-2 fas fa-user"></i></a>
+                            <a class="login text-white btnOk btn-send-mail">XÁC NHẬN ĐƠN HÀNG<i class="ml-2 fas fa-user"></i></a>
                         </div>
                     </div>
                 </div>
@@ -142,28 +142,28 @@
                         $(res).each(function (index, item) {
                             price += item.o.Price * item.o.Stock;
                             row += `   <div class="item d-flex justify-content-between align-items-center justify-content-center py-3">
-                                                            <div class="w-25 avt-pro">
-                                                                <div class="w-75 mx-auto">
-                                                                    <img src="${item.p.Image}" />
+                                                                <div class="w-25 avt-pro">
+                                                                    <div class="w-75 mx-auto">
+                                                                        <img src="${item.p.Image}" />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="w-50 so-luong ">
-                                                                <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
-                                                                    <span class="number-add py-1 px-2">
-                                                                        <i class="fas fa-plus"></i>
-                                                                    </span>
-                                                                    <span class="value-pro number-pro" data-value="${item.o.Stock}" data-pay="${item.p.Price}" data-id="${item.p.Id}">${item.o.Stock}</span>
-                                                                    <span class="number-sub py-1 px-2">
-                                                                        <i class="fas fa-minus"></i>
-                                                                    </span>
+                                                                <div class="w-50 so-luong ">
+                                                                    <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
+                                                                        <span class="number-add py-1 px-2">
+                                                                            <i class="fas fa-plus"></i>
+                                                                        </span>
+                                                                        <span class="value-pro number-pro" data-value="${item.o.Stock}" data-pay="${item.p.Price}" data-id="${item.p.Id}">${item.o.Stock}</span>
+                                                                        <span class="number-sub py-1 px-2">
+                                                                            <i class="fas fa-minus"></i>
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="w-25 money mx-auto text-center">
-                                                                <div class="mx-3 py-1 thanh-tien">
-                                                                    <span class="here" id="price-default" data-default="${item.p.Price}">${item.p.Price}</span><sup>vnđ</sup>
+                                                                <div class="w-25 money mx-auto text-center">
+                                                                    <div class="mx-3 py-1 thanh-tien">
+                                                                        <span class="here" id="price-default" data-default="${item.p.Price}">${item.p.Price}</span><sup>vnđ</sup>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>`;
+                                                            </div>`;
                         });
                         $('.cart-left').append(row);
                         debugger;
@@ -172,7 +172,7 @@
                         let result = '$' + parseFloat(price, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString().substr(0,);
                         let show = result.substr(0, result.length - 2);
                         console.log(show);
-                       
+
                         $('#tongTriGia').attr('data-value', price);
                         $('#tongTriGia').text(show);
                         debugger;
@@ -240,9 +240,9 @@
                 })
             }
 
-       
 
-                });
+
+        });
 
 
     </script>

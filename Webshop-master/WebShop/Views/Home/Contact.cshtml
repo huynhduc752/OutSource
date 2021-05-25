@@ -33,7 +33,7 @@
                         <textarea class="w-100 form-control" rows="5" placeholder="Nội Dung" style="resize:none"></textarea>
                     </div>
                     <div class="my-3">
-                        <button class="w-100 bg-black text-white btnSubmit">
+                        <button class="w-100 bg-black text-white btnSubmit btn-send-mail">
                             Đăng ký ngay
                         </button>
                     </div>
@@ -97,6 +97,54 @@
                                 alert("đăng ký tài khoản thành công");
                         }
                     })
+                }
+            })
+        }
+        $('.btn-send-mail').click(function () {
+            debugger;
+            var obj = {};
+
+            obj.email = $('.items-contact input[name=Email]').val();
+            obj.name = $('.items-contact input[name=Name]').val();
+            obj.phone = $('.items-contact input[name=Phone]').val();
+            obj.address = $('.items-contact input[name=Address]').val();
+            SendEmail(obj);
+        })
+        function SendEmail(obj) {
+            debugger;
+            $.ajax({
+                url: '/Home/ConfirmEmail',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    obj: obj,
+                },
+                beforeSend: function () {
+                    $('.btn.btn-submmit.btnUpdate ').html('<div class="spinner-border text-light"></div>');
+                },
+                success: function (res) {
+                    $('.btn-get').html('');
+                    if (!res) {
+                        $('.error').html('');
+                        var row = `<p> Email không tồn tại </p>`;
+                        $('.error').append(row);
+                        $('.btn-get').text(' Xác nhận');
+                        console.log('ko dc');
+                    } else {
+                        $('.error').html('');
+
+                        var row = `<a href="https://mail.google.com/mail/u/0/#inbox" class="text-white"> Đi đến Gmail</a>`;
+
+                        $('.btn-get').css({
+                            'width': 'auto',
+                            'height': 'auto'
+                        })
+                        $('.btn-get').append(row);
+                        alert('đã gửi mail thành công');
+                    }
+                },
+                error: function () {
+
                 }
             })
         }

@@ -1,7 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.Models;
@@ -210,6 +213,61 @@ namespace WebShop.Controllers
             catch (Exception)
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        // mail send
+        public partial class Obj
+        {
+            public string email { get; set; }
+            public string name { get; set; }
+            public string address { get; set; }
+            public string phone { get; set; }
+        }
+        public JsonResult ConfirmEmail(Obj obj)
+        {
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential("huynhducmadridista@gmail.com", "huynhduc752"),
+
+            };
+            var htmlBody = "";
+
+            DirectoryInfo info = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            string infy = info.Parent.FullName;
+            var path = Server.MapPath(Url.Content("~/SendEmail/SendMail.html"));
+            using (StreamReader reader = new StreamReader(path))
+            {
+                htmlBody = reader.ReadToEnd();
+                htmlBody = htmlBody.Replace("{{Email}}", obj.email);
+                htmlBody = htmlBody.Replace("{{name}}", obj.name);
+                htmlBody = htmlBody.Replace("{{address}}", obj.address);
+                htmlBody = htmlBody.Replace("{{phone}}", obj.phone);
+
+            }
+            var mes = new MailMessage("huynhducmadridista@gmail.com", obj.email)
+            {
+                Subject = " Curnone",
+                Body = ""
+            };
+            mes.IsBodyHtml = true;
+            mes.Body = htmlBody;
+
+            try
+            {
+                smtp.Send(mes);
+                return Json(true);
+            }
+            catch (Exception e)
+            {
+                return Json(false);
+
             }
         }
     }
