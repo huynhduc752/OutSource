@@ -1,0 +1,50 @@
+﻿@model WebShop.Models.Size
+<table>
+    <tr>
+        <td>: </td>
+        <td>@Model.Tilte </td>
+    </tr>
+    <tr>
+        <td>Tiêu đề phụ: </td>
+        <td>@Model.SubTilte </td>
+    </tr>
+    
+    <tr>
+        <td>Hình ảnh: </td>
+        <td>
+            <img src="@Model.Image" alt="Alternate Text" class="img-fluid" />
+        </td>
+    </tr>
+    <tr>
+        <td>Thứ tự: </td>
+        <td>@Model.OrderBy </td>
+    </tr>
+    <tr>
+        <td>Người tạo: </td>
+        <td>@Model.CreatedBy </td>
+    </tr>
+    <tr>
+        <td>Ngày tạo: </td>
+        <td>@Model.CreatedDate </td>
+    </tr>
+    <tr>
+        <td>Người cập nhật: </td>
+        <td>@Model.UpdatedBy </td>
+    </tr>
+    <tr>
+        <td>Ngày cập nhật: </td>
+        <td>@Model.UpdatedDate </td>
+    </tr>
+
+    <tr>
+        <td>Trạng thái: </td>
+        @if (Model.Status == true)
+        {
+            <td>Hoạt động</td>
+        }
+        else
+        {
+            <td>Ngừng hoạt động</td>
+        }
+    </tr>
+</table>

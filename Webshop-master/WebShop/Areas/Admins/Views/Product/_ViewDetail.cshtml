@@ -1,0 +1,92 @@
+﻿@model WebShop.Models.Product
+@{
+    var cateName = ViewBag.category;
+    var Images = ViewBag.images as IEnumerable<WebShop.Models.Product_Image>;
+    var Sizes = ViewBag.sizes as IEnumerable<WebShop.Models.Size>;
+}
+<div class="row">
+    <div class="col-md-6">
+        <table>
+            <tr>
+                <td>Mã sản phẩm: </td>
+                <td>@Model.Code </td>
+            </tr>
+            <tr>
+                <td>Tên sản phẩm: </td>
+                <td>@Model.Name </td>
+            </tr>
+
+            <tr>
+                <td>Danh mục: </td>
+                <td>@cateName </td>
+            </tr>
+
+            <tr>
+                <td>Giá bán: </td>
+                <td>@Model.Price </td>
+            </tr>
+            <tr>
+                <td>Số lượng: </td>
+                <td>@Model.Stock </td>
+            </tr>
+            <tr>
+                <td>Thứ tự: </td>
+                <td>@Model.OrderBy </td>
+            </tr>
+            <tr>
+                <td>Người tạo: </td>
+                <td>@Model.CreatedBy </td>
+            </tr>
+            <tr>
+                <td>Ngày tạo: </td>
+                <td>@Model.CreatedDate </td>
+            </tr>
+            <tr>
+                <td>Người cập nhật: </td>
+                <td>@Model.UpdatedBy </td>
+            </tr>
+            <tr>
+                <td>Ngày cập nhật: </td>
+                <td>@Model.UpdatedDate </td>
+            </tr>
+
+            <tr>
+                <td>Trạng thái: </td>
+                @if (Model.Status == true)
+                {
+                    <td>Hoạt động</td>
+                }
+                else
+                {
+                    <td>Ngừng hoạt động</td>
+                }
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <div class="main-image m-2">
+            <img src="@Model.Image" alt="" class="w-50 border border-info"/>
+        </div>
+
+        <div class="list-image d-flex flex-wrap">
+            @foreach(var item in Images)
+            {
+                <img src="@item.Image" class="w-25 m-1 border border-info"/>
+            }
+        </div>
+
+        <div class="list-size mt-2">
+            <h6>Danh sách size còn hàng</h6>
+            <div class="d-flex flex-wrap">
+                @foreach (var item in Sizes)
+                {
+                    <div class="d-block mr-1 mb-1 item-size border border-success" style="min-width:50px;text-align:center;" data-id="@item.Id">
+                        @item.Name
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

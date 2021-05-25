@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebShop.Models.Product>
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <section class="list-category my-5">
+        <div class="container">
+            <div class="text-center head-title my-5">
+                <h4>
+                    SẢN PHẨM CỦA CHÚNG TÔI
+                </h4>
+            </div>
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-6 col-lg-3 ">
+                        <div class="item-cate">
+                            <div class="position-relative avt-pro">
+                                <img src="@item.Image" />
+                                <div class="position-absolute note-cate d-none">
+                                    <span class="sales">
+                                        <a href="/san-pham/@item.Slug-@item.Id">Xem chi tiết</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="infor-pro">
+                                <h5>@item.Name</h5>
+                                <div>
+                                    <h6>Mã sản phẩm: <span>@item.Code</span></h6>
+                                    <h6>Giá: @item.Price <sup>vnđ</sup></h6>
+                                </div>
+                                <a class="view-detail text-white" href="/san-pham/@item.Slug-@item.Id">Xem Chi Tiết <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>

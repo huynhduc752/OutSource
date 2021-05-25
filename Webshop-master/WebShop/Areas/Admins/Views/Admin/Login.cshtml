@@ -1,0 +1,87 @@
+﻿@{ 
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="">
+    <style>
+        body {
+            background: #aeb3b8;
+        }
+        .login-box{
+            width:380px;
+            margin:7% auto;
+            min-height:450px;
+        }
+    </style>
+    <div class="login-box bg-white p-3 pt-5">
+        <div class="login-logo">
+            <a href="/"><h3>Webshop</h3></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+            <div class="mb-4">
+                <div class="form-group has-feedback mb-4">
+                    <input type="email" class="form-control" placeholder="Email" id="Email">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback mb-4">
+                    <input type="password" class="form-control" placeholder="Password" id="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <button class="btn btn-outline-primary btnLogin">Đăng nhập</button>
+            </div>
+
+            <a href="#">I forgot my password</a><br>
+            <a href="#" class="text-center mt-3">Register a new membership</a>
+
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery 3 -->
+    <script src="~/Content/Admin/lib/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Content/Admin/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $(function () {
+            $('.btnLogin').click(function () {
+                let Email = $('#Email').val();
+                let Password = $('#Password').val();
+                $.ajax({
+                    url: '/Admins/Admin/Login',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        Email: Email,
+                        Password: Password
+                    },
+                    success: function (res) {
+                        if (res) {
+                            //toastr.error("Đăng nhập thành công");
+                            location.href = '/Admins/Admin/Index';
+                        }
+                        else {
+                            alert("Đăng nhập thất bại");
+                            toastr.error("Đăng nhập thất bại");
+                        }
+                    }
+                })
+            });
+        });
+    </script>
+</body>
+</html>

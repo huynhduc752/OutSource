@@ -1,0 +1,118 @@
+﻿<aside class="main-sidebar sidebar-dark-primary">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <img src="~/Content/Admin/css/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle">
+        <span class="brand-text">AdminLTE 3</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 d-flex">
+            <div class="image">
+                <img src="~/Content/Admin/css/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                @if (Session["UserName"] != null)
+                {
+                    <a href="#" class="d-block">@Session["UserName"]</a>
+                }
+                else
+                {
+                    <a href="#" class="d-block">????????????</a>
+                }
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav>
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+                <li class="nav-header"> Thanh điều hướng </li>
+                <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Admin
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/Admins/Admin" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tài khoản</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/Admins/Config" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Cấu hinh</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="nav-header"> Tác vụ </li>
+                <li class="nav-item has-treeview">
+                    <a href="/Admins/Banner" class="nav-link">
+                        <i class="nav-icon far fa-envelope"></i>
+                        <p>
+                            Banner
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                <li class="nav-item">
+                    <a href="/Admins/Category" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Danh mục sản phẩm</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admins/Customers" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Khách hàng</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admins/Product" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Sản phẩm</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Admins/Size" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Kích cỡ</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Admins/Order" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Đặt hàng</p>
+                    </a>
+                </li>
+
+                <li class="nav-header">MISCELLANEOUS</li>
+                <li class="nav-item">
+                    <a href="/Admins/Admin/ChangePassword" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>Đổi mật khẩu</p>
+                    </a>
+                </li>
+                <li class="nav-item bg-danger">
+                    <a href="/Admins/Admin/Logout" class="nav-link">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>Đăng xuất</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

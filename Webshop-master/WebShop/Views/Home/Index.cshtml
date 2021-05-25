@@ -1,0 +1,342 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
+<section class="home-enago">
+    <div class="banner-web">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                @{
+                    var check = 0;
+                }
+                @foreach (var item in ViewBag.SlideShow as IEnumerable<WebShop.Models.Banner>)
+                {
+                    if (check == 0)
+                    {
+                        <div class="carousel-item active">
+                            <img src="@item.Image" class="d-block w-100" alt="...">
+                        </div>
+                        check++;
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <img src="@item.Image" class="d-block w-100" alt="...">
+                        </div>
+                    }
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <div class="my-5 page-one">
+        <div class="my-5 title-page text-center">
+            <h4>
+                BỘ SƯU TẬP
+            </h4>
+            <a href="#">KHÁM PHÁ THÊM <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="position-relative">
+                        <img src="~/Content/Upload/news/MenBestSeller.jpg" />
+                        <div class="position-absolute content-one">
+                            <h5>Đồng hồ nam</h5>
+                            <a href="">Mua Ngay <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="position-relative">
+                        <img src="~/Content/Upload/news/NewFlorenge.jpg" />
+                        <div class="position-absolute content-one">
+                            <h5>Đồng hồ nữ</h5>
+                            <a href="#">Mua Ngay <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="position-relative">
+                        <img src="~/Content/Upload/news/MenCuff-1.jpg" />
+                        <div class="position-absolute content-one">
+                            <h5>Phụ kiện nam</h5>
+                            <a href="#">Mua Ngay <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <div class="position-relative">
+                        <img src="~/Content/Upload/news/WomenCuffs.jpg" />
+                        <div class="position-absolute content-one">
+                            <h5>Phụ kiện nữ</h5>
+                            <a href="#">Mua Ngay <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-three">
+        <div class="my-5 title-page text-center">
+            <h4>
+                SẢN PHẨM NỔI BẬT
+            </h4>
+            <a href="#">KHÁM PHÁ THÊM <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                @foreach (var item in ViewBag.HotProduct as IEnumerable<WebShop.Models.Product>)
+                {
+                    <div class="col-6 col-lg-3">
+                        <div class="items">
+                            <div class="product">
+                                <div class="position-relative avt-pro">
+                                    <img src="@item.Image" />
+                                    <div class="position-absolute love ">
+
+                                        <div class="tym text-red"><i class="far fa-heart"></i></div>
+
+                                    </div>
+                                </div>
+                                <div class="infor-pro">
+                                    <h6>@item.Name</h6>
+                                    <a class="view-detail text-white" href="/san-pham/@item.Slug-@item.Id">Xem Chi Tiết <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="page-two">
+        <div class="my-5 title-page text-center">
+            <h4>
+                DANH MỤC SẢN PHẨM
+            </h4>
+            <a href="#">KHÁM PHÁ THÊM <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="items">
+                        <div class="regular-title-item slider">
+                            @foreach (var item in ViewBag.listProduct as IEnumerable<WebShop.Models.Product>)
+                            {
+                                <div>
+                                    <div class="product">
+                                        <div class="position-relative avt-pro">
+                                            <img src="@item.Image" />
+                                            <div class="position-absolute">
+
+                                            </div>
+                                        </div>
+                                        <div class="infor-pro">
+                                            <h6>@item.Name</h6>
+                                            <a href="/san-pham/@item.Slug-@item.Id">Xem Chi Tiết <span><i class="fas fa-long-arrow-alt-right"></i></span></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="banner-two my-5">
+        <div class="position-relative">
+            <img src="~/Content/Upload/news/vu-64Z.png" />
+            <div class="position-absolute detai-page">
+                <h4 class="text-white"> Phong Cách Thời Đại Mới</h4>
+                <h5 class="text-white">Lịch lãm - Sang trọng -Khí chất</h5>
+                <div class="more-infor  mt-5">
+                    <a class="show-more bg-white py-3 px-5" href="#">KHÁM PHÁ NGAY</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @* đăng ký nhận ưu đãi *@
+    <div class=" supprice">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-6">
+                    <div class="w-75 justify-content-center">
+                        <img class="b-radius"  src="~/Content/Upload/news/bg1-wuA.jpg" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="sup-title ">
+                        <h5>SẢN PHẨM CỦA CHÚNG TÔI</h5>
+                        <h6>Đăng ký với chúng tôi</h6>
+                        <p>
+                            Nhận thông tin về sản phẩm mới nhất
+                            Chính sách hoàn trả trong vòng 24h
+                            Tiền mặt khi giao hàng được chấp nhận
+                        </p>
+
+                        <a href="#register" class="btn btn-detail">
+                            Chi Tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-four">
+        <div class="my-5 title-page text-center">
+            <h4>
+                SẢN PHẨM MỚI NHẤT
+            </h4>
+
+        </div>
+        <div class="container">
+            <div class="row">
+                @foreach (var item in ViewBag.newProduct as IEnumerable<WebShop.Models.Product>)
+                {
+                    <div class="col-6 col-lg-3">
+                        <div class="items">
+                            <div class="product">
+                                <div class="position-relative avt-pro">
+                                    <img src="@item.Image" />
+                                </div>
+                                <div class="infor-pro">
+                                    <h6>@item.Name</h6>
+                                    <p>
+                                        <span>@item.Price<sup>đ</sup></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="view-more-product text-center w-100">
+                    <a href="#">XEM THÊM<span><i class="fas ml-2 fa-long-arrow-alt-right"></i></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-six my-5">
+        <div class="container mt-5">
+            <div class=" mb-5 title-page text-center">
+                <h4 class="mb-1">
+                    TIN TỨC - SỰ KIỆN
+                </h4>
+
+            </div>
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-6">
+                    <div class="title-news">
+                        <div class="position-relative">
+                            <img src="~/Content/Upload/news/storyLarge-8J9.png" />
+                            <div class="position-absolute detail-news">
+                                <h5 class="mb-0">THÔNG TIN TUYỂN DỤNG</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+
+                    <div class="regular-intro slider">
+                        <div>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/kmQQRap9DxA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/CZ6T7Tm4jaI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/mTZeZhaR0cY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/ZqSyUkffhUM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* đăng kí nhận tin *@
+
+    <div class="supprice-news container my-5" id="register">
+        <div class=" mb-4 title-page text-center">
+            <h5>
+                ĐĂNG KÝ NHẬN TIN MỚI
+            </h5>
+            <p>Nhận các tin tức về chương trình và khuyến mãi sớm nhất</p>
+        </div>
+        <form>
+            <div class="row">
+                <div class="col-12 col-lg-4">
+                    <input type="text" name="name" class="form-control" placeholder="Họ và Tên" />
+                </div>
+                <div class="col-12 col-lg-4">
+                    <input type="text" name="email" class="form-control" placeholder="Email" />
+
+                </div>
+                <div class="col-12 col-lg-4">
+                    <button class="w-100 btn btn-supprice"> ĐĂNG KÝ </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</section>
+
+@section scripts{
+    <script>
+        Subscribe();
+        function Subscribe() {
+            $('.btn-supprice').click(function () {
+                let name = $('input[name=name]').val();
+                let email = $('input[name=email]').val();
+                let customer = new Object();
+                customer["Name"] = name;
+                customer["Email"] = email;
+                if (name == "" || email == "") {
+                    alert("không được để trống");
+                }
+                else {
+                    $.ajax({
+                        url: '/Home/SubcribeUser',
+                        dataType: 'json',
+                        type: 'post',
+                        data: {
+                            customer: customer
+                        },
+                        success: function (res) {
+                            if (res)
+                                alert("đăng ký tài khoản thành công");
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+}

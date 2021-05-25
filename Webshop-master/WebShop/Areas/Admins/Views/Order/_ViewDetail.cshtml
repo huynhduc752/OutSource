@@ -1,0 +1,92 @@
+﻿@model WebShop.ViewModel.OrderViewModel
+@{
+    var Detail = ViewBag.OrderDetail as IEnumerable<WebShop.ViewModel.OrderDetailViewModel>;
+}
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <table>
+                <tr>
+                    <td>Người tạo: </td>
+                    <td>@Model.admin.Name </td>
+                </tr>
+                <tr>
+                    <td>Tên khách hàng: </td>
+                    <td>@Model.customer.Name</td>
+                </tr>
+
+                <tr>
+                    <td>SĐT KH: </td>
+                    <td>@Model.customer.Phone</td>
+                </tr>
+
+                <tr>
+                    <td>Ghi chú: </td>
+                    <td>@Model.order.Note </td>
+                </tr>
+                <tr>
+                    <td>Ngày tạo: </td>
+                    <td>@Model.order.CreatedDate </td>
+                </tr>
+                <tr>
+                    <td>Người cập nhật: </td>
+                    <td>@Model.order.UpdatedBy </td>
+                </tr>
+                <tr>
+                    <td>Ngày cập nhật: </td>
+                    <td>@Model.order.UpdatedDate </td>
+                </tr>
+
+                <tr>
+                    <td>Trạng thái: </td>
+                    @if (Model.order.Status == 0)
+                    {
+                        <td>Đã xong</td>
+                    }
+                    else if (Model.order.Status == 1)
+                    {
+                        <td>Chưa duyệt</td>
+                    }
+                    else if (Model.order.Status == 2)
+                    {
+                        <td>Hủy</td>
+                    }
+
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int current = 0;
+                    }
+                    @foreach (var item in Detail)
+                    {
+                        current += (int)item.order.Price;
+                        <tr>
+                            <td data-id="@item.order.ProductId">@item.productName</td>
+                            <td>@item.order.Stock</td>
+                            <td>@item.order.Price</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Tổng hóa đơn : @current.ToString() </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+}

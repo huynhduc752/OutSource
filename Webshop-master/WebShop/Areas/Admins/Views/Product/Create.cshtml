@@ -1,0 +1,249 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admins/Views/Shared/_Layout.cshtml";
+    var cate = ViewBag.categorys as IEnumerable<WebShop.Models.Category>;
+    var size = ViewBag.sizes as IEnumerable<WebShop.Models.Size>;
+}
+<style>
+    .input-group-text {
+        min-width: 200px !important;
+    }
+</style>
+<div class="obj-product ml-2 mr-2">
+    <div>
+        <h3>Thêm mới sản phẩm</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="input-group mb-3">
+                <input type="number" id="Id" name="Id" value="0" hidden>
+
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Mã sản phẩm</span>
+                </div>
+                <input type="text" class="form-control" name="Code">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Tên sản phẩm</span>
+                </div>
+                <input type="text" class="form-control" name="Name">
+            </div>
+            <div class="d-flex">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Giá sản phẩm</span>
+                    </div>
+                    <input type="number" class="form-control" name="Price">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Số lượng</span>
+                    </div>
+                    <input type="number" class="form-control" name="Stock">
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Số thứ tự</span>
+                </div>
+                <input type="number" class="form-control" name="OrderBy">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Chọn danh mục</span>
+                </div>
+
+                <select name="CategoryId" class="form-control">
+                    <option value="0">---Chọn danh mục sản phẩm---</option>
+                    @foreach (var item in cate)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="list-size mb-2">
+                <h6 class="bg-secondary p-1">Chọn các size còn lại</h6>
+                <div class="d-flex flex-wrap">
+                    @foreach (var item in size)
+                    {
+                        <div class="d-block border border-secondary p-2 mr-1 mb-1 item-size" style="min-width:50px;text-align:center;" data-id="@item.Id">
+                            @item.Name
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <textarea class="ckeditor" name="Description" id="Description"></textarea>
+
+            <div class="status mt-3">
+                <input type="radio" name="Status" id="IsActive" checked value="" />
+                <label for="IsActive" class="mr-2">Hoạt động</label>
+                <input type="radio" name="Status" id="NotActive" value="" />
+                <label for="NotActive" class="">Không hoạt động</label>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="product-image border border-info mb-1">
+                <h6 class="p-2 bg-secondary">Chọn ảnh sản phẩm</h6>
+                <input type="text" name="Image" value="~/Content/Upload/Image/no-image.png" hidden />
+                <img src="~/Content/Upload/Image/no-image.png" alt="Alternate Text" class="w-100 show-image" />
+            </div>
+            <div class="mb-1">
+                <button class="btnUpload btn btn-secondary">Thêm ảnh</button>
+            </div>
+            <div class="list-image d-flex flex-wrap">
+
+            </div>
+        </div>
+
+        <div class="submit d-flex justify-content-end m-2">
+            <button class="btnCreate btn btn-success ">Thêm mới</button>
+            <button class="btnBack btn btn-danger ml-2">Quay lại</button>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/ckfinder/ckfinder.js"></script>
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.btnBack').click(function () {
+                location.href = '/Admins/Product/Index'
+            })
+        })
+
+        ChooseImage();
+        DeleteImage();
+        ChooseSize();
+        ChooseMainImage();
+        AddOrUpdate();
+        function ChooseMainImage() {
+            $('.show-image').click(function () {
+                let finder = new CKFinder();
+                let img = this;
+                finder.selectActionFunction = function (fileUrl) {
+                    $(img).attr('src', fileUrl);
+                    $('input[name=Image]').val(fileUrl);
+                };
+                finder.popup();
+            })
+        }
+
+        function ChooseImage() {
+            $('.btnUpload').click(function () {
+                let finder = new CKFinder();
+                let img = this;
+                finder.selectActionFunction = function (fileUrl) {
+                    $(img).attr('src', fileUrl);
+                    $('#image').val(fileUrl);
+                    let row = `
+                            <div class="image-item d-block position-relative w-25 border border-info mb-1 mr-1">
+                                            <img src="${fileUrl}" class="w-100" />
+                                            <button class="btnDeleteImage btn position-absolute text-danger p-0 " style="top:0px;right:0px">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                                `;
+                    $('.list-image').append(row);
+                    DeleteImage();
+
+                };
+                finder.popup();
+
+            })
+        }
+
+        function DeleteImage() {
+            $('.btnDeleteImage').click(function () {
+                $(this).parent().remove();
+            })
+        }
+
+        function ChooseSize() {
+            $('.item-size').click(function () {
+                $(this).toggleClass('bg-success');
+                $(this).toggleClass('border');
+            })
+        }
+
+        function AddOrUpdate() {
+            $('.btnCreate').click(function () {
+                // sản phẩm
+                let product = new Object();
+                $('.obj-product input,.obj-product select').each(function () {
+                    product[$(this).attr('name')] = $(this).val();
+                })
+                product["Status"] = $("#IsActive").is(':checked');
+                product["Description"] = CKEDITOR.instances['Description'].getData();
+                console.log(product);
+
+                // ảnh của sản phẩm
+                let dataImage = [];
+                $('.list-image img').each(function () {
+                    let objImage = new Object();
+                    let linkImg = $(this).attr('src');
+                    objImage["Image"] = linkImg;
+                    objImage["ProductId"] = 0;
+                    dataImage.push(objImage);
+                })
+
+                // ảnh của sản phẩm
+                let dataSize = [];
+                $('.list-size .item-size').each(function () {
+                    let objSize = new Object();
+                    if ($(this).hasClass('bg-success')) {
+                        let sizeId = $(this).attr('data-id');
+                        objSize["Size"] = sizeId;
+                        objSize["ProductId"] = 0;
+                        dataSize.push(objSize);
+                    }
+                })
+
+                $.ajax({
+                    url: '/Admins/Product/AddOrUpdate',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        product: product,
+                        product_Images: dataImage,
+                        productSizes: dataSize
+                    }),
+                    beforeSend: function () {
+
+                    },
+                    success: function (res) {
+                        if (res == true) {
+                            if ($('#Id').val() == 0)
+                                toastr.success("Thêm thành công");
+                            else
+                                toastr.success("Sửa thành công");
+                        }
+                        else {
+                            if ($('#Id').val() == 0)
+                                toastr.error("Thêm thất bại");
+                            else
+                                toastr.error("Sửa thất bại");
+                        }
+                    },
+                    error: function () {
+
+                    },
+                    complete: function () {
+                    }
+                })
+            })
+        }
+
+
+    </script>
+}

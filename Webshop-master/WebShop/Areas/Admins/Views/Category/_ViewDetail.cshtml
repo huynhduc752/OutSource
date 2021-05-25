@@ -1,0 +1,43 @@
+﻿@model WebShop.Models.Category
+<table>
+    <tr>
+        <td>Mã danh mục: </td>
+        <td>@Model.Code </td>
+    </tr>
+    <tr>
+        <td>Tên danh mục: </td>
+        <td>@Model.Name </td>
+    </tr>
+    <tr>
+        <td>Dường dẫn: </td>
+        <td>@Model.Slug </td>
+    </tr>
+    <tr>
+        <td>Người tạo: </td>
+        <td>@Model.CreatedBy </td>
+    </tr>
+    <tr>
+        <td>Ngày tạo: </td>
+        <td>@Model.CreatedDate </td>
+    </tr>
+    <tr>
+        <td>Người cập nhật: </td>
+        <td>@Model.UpdatedBy </td>
+    </tr>
+    <tr>
+        <td>Ngày cập nhật: </td>
+        <td>@Model.UpdatedDate </td>
+    </tr>
+
+    <tr>
+        <td>Trạng thái: </td>
+        @if (Model.Status==true)
+        {
+            <td>Hoạt động</td>
+        }
+        else
+        {
+            <td>Ngừng hoạt động</td>
+        }
+    </tr>
+</table>

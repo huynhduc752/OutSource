@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title> Admin App </title>
+    @Styles.Render("~/Content/css")
+
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="~/Content/Admin/lib/fontawesome-free/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/Content/Admin/lib/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/Admin/css/admin/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="~/Content/Admin/css/admin/dist/css/custom.css">
+
+    @*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
+
+    <link href="~/Content/Admin/css/admin/dist/css/customtable.css" rel="stylesheet" />
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/Admin/lib/select2/css/select2.min.css" rel="stylesheet" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    @if (Session["User"] == null)
+    {
+        <script>
+            location.href = '/Admins/Admin/Login'
+        </script>
+    }
+    <div class="wrapper">
+        <!-- Navbar -->
+        @*header*@
+        @Html.Partial("_Header")
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_SideBar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        @*footer*@
+        @Html.Partial("_Footer")
+    </div>
+
+    <!--Bundle-->
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    @*<script src="~/Content/Admin/lib/jquery/jquery.min.js"></script>*@
+    <!-- Bootstrap -->
+    @*<script src="~/Content/Admin/lib/bootstrap/js/bootstrap.bundle.min.js"></script>*@
+    <!-- overlayScrollbars -->
+    <script src="~/Content/Admin/lib/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/Admin/css/admin/dist/js/adminlte.min.js"></script>
+    @*<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    @*render section scripts*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

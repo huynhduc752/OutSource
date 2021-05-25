@@ -1,0 +1,130 @@
+﻿@model WebShop.Models.Product
+@{ ViewBag.Title = "About"; }
+<section class="page-detail container my-5">
+    <div class="information">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div id="magnific">
+                    <div class="large-5 column">
+                        <div class="xzoom-container w-50">
+                            <img class="xzoom5" id="xzoom-magnific" src="@Model.Image" xoriginal="@Model.Image" />
+                            <div class="xzoom-thumbs d-flex justify-content-between">
+
+                                @foreach (var item in ViewBag.image as IEnumerable<WebShop.Models.Product_Image>)
+                                {
+                    <a href="@item.Image">
+                        <img class="xzoom-gallery5" width="80" src="@item.Image" title="The description goes here">
+                    </a>}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-7 column"></div>
+
+                </div>
+
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="title-detail">
+                    <input type="text" name="Id" value="@Model.Id" hidden />
+                    <h5>@Model.Name</h5>
+                    <h6>Mã sản phẩm: <span>@Model.Code</span></h6>
+                    <p>Giá: <span class="price" data-price="@Model.Price">@String.Format("{0:C0}", Model.Price)<sup>vnđ</sup></span></p>
+                </div>
+                <hr />
+                <div class="my-3 d-flex">
+                    <h6 class="mr-4 w-25">Size: </h6>
+                    <div>
+                        @foreach (var item in ViewBag.size as IEnumerable<WebShop.Models.Size>)
+                        {
+            <span class="size-pro py-1 px-3">@item.Name</span>}
+                    </div>
+                </div>
+                <div class="my-3 d-flex">
+                    <h6 class="mr-4 w-25">Số lượng:</h6>
+                    <div class="d-flex justify-content-between w-30 align-items-center tool-nụmber">
+                        <span class="number-add py-1 px-3">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span class="value-pro" data-value="1">1</span>
+                        <span class="number-sub py-1 px-3">
+                            <i class="fas fa-minus"></i>
+                        </span>
+
+                    </div>
+                </div>
+                <hr />
+                <div>
+                    <button class="btn btn-add bg-black">
+                        Thêm vào giỏ hàng
+                    </button>
+                </div>
+                <div class="information-detail my-4">
+                    <div class="category">
+                        <h6 class="title-in">
+                            <span><i class="fas fa-caret-right mr-3"></i></span>
+                            Thông tin sản phẩm
+                        </h6>
+                        <div class="d-none detail-p" data-show="0">
+                            @Html.Raw(Model.Description)
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h6 class="title-in">
+                            <span><i class="fas fa-caret-right mr-3"></i></span>
+                            Chính sách bảo hành
+                        </h6>
+                        <div class="d-none detail-p" data-show="0">
+                            <p>
+                                - Sản phẩm đồng hồ nếu khách hàng nhận được nhưng bị lỗi , hỏng quai ( không có sự can thiệp của khách hàng ) sẽ được Curnon Store kiểm tra và tiến hành đổi sản phẩm cho khách. Nếu sản phẩm bị lỗi do quá trình vận chuyển Curnon Store xin phép thu hồi và đổi hàng mới cho khách.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="category">
+                        <h6 class="title-in">
+                            <span><i class="fas fa-caret-right mr-3"></i></span>
+                            Chính sách đổi trả
+                        </h6>
+                        <div class="d-none detail-p" data-show="0">
+                            <p>
+                                - Curnon Store nhận đổi hàng trong vòng 3 ngày với đơn Nội thành và 7 ngày với đơn COD. <br />
+
+                                - Sản phẩm đổi phải chưa qua sử dụng và còn nguyên tem mác. <br />
+
+                                - Đơn đổi phải có giá trị bằng hoặc cao hơn đơn cũ. Khách hàng vui lòng thanh toán phí ship 2 chiều với đơn đổi.
+
+                                <br />- Không áp dụng đổi hàng với các sản phẩm sale.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+
+    <script>
+        AddCart();
+        function AddCart() {
+            $('.btn-add').click(function () {
+                let orderDetail = new Object();
+                orderDetail["ProductId"] = $('input[name=Id]').val();
+                orderDetail["Price"] = $('.price').attr('data-price');
+                orderDetail["Stock"] = $('span.value-pro').attr('data-value') == 0 ? "1" : $('span.value-pro').attr('data-value');
+                console.log(orderDetail);
+                $.ajax({
+                    url: '/Home/AddToCart',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        orderDetail: orderDetail
+                    },
+                    success: function (res) {
+                        alert("ok");
+                    }
+                })
+            })
+        }
+    </script>
+}

@@ -1,0 +1,181 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admins/Views/Shared/_Layout.cshtml";
+}
+<div class="data-content ml-2 mr-2">
+    <div class="row pb-2 pt-3">
+        <div class="title-form col-md-8">
+            <h3 class="m-0">Quản lý danh mục sản phẩm</h3>
+        </div>
+        <div class="col-md-4 header-data d-flex justify-content-between">
+            <input class="searchInput form-control mr-2 w-75" name="search" placeholder="Nhập để tìm kiếm" />
+            <button class="btn btnAdd btn-primary w-25">Thêm mới</button>
+        </div>
+    </div>
+    <div class="main-form row">
+        <div class="col-md-12 data-table " id="viewTable">
+            @*đây là table*@
+        </div>
+    </div>
+
+    <div class="view-detail">
+        <div class="modal fade" id="CategoryDetail" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Chi tiết danh mục sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" style="outline:none">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            let pageNumber = 1;
+            $('.btnAdd').click(function () {
+                location.href ="/Admins/Product/Create"
+            })
+
+            function Edit() {
+                $('.btnEdit').click(function () {
+                    let id = $(this).attr('data-id');
+                    location.href = "/Admins/Product/Edit/" + id;
+                })
+            }
+            // action
+            // view data
+            GetViewData(1, '');
+            Search();
+
+            // view ra table data
+            function GetViewData(pageNumber, search) {
+                $.ajax({
+                    url: '/Admins/Product/_ViewTable',
+                    type: 'post',
+                    dataType: 'html',
+                    data: {
+                        pageNumber: pageNumber,
+                        search: search
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (res) {
+                        $('#viewTable').html('');
+                        $('#viewTable').html(res);
+                    },
+                    error: function (error) {
+                    },
+                    complete: function () {
+                        DeleteById();
+                        ChangePage();
+                        ViewDetail();
+                        Edit();
+                    }
+                })
+            }
+            // chuyển phân trang
+            function ChangePage() {
+                $('.pagination li a').click(function () {
+                    pageNumber = $(this).attr('data-index');
+                    let search = $(".searchInput").val();
+                    GetViewData(pageNumber, search);
+                })
+            }
+            // tìm kiếm
+            function Search() {
+                $('.searchInput').keyup(function () {
+                    let search = $(this).val();
+                    GetViewData(1, search);
+                })
+
+            }
+            // view chi tiết
+            function ViewDetail() {
+                $('.btnInfo').click(function () {
+                    let id = $(this).attr('data-id');
+                    $.ajax({
+                        url: '/Admins/Product/_ViewDetail',
+                        dataType: 'html',
+                        type: 'post',
+                        data: {
+                            id: id
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            $('.modal-body').html('');
+                            $('.modal-body').html(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+
+                    })
+
+                })
+            }
+            // xóa
+            function DeleteById() {
+                $('.btnDelete').click(function () {
+                    swal({
+                        title: "Bạn có chắc muốn xóa không?",
+                        text: "Dữ liệu xóa không thể khôi phục lại!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                let id = $(this).attr('data-id');
+                                $.ajax({
+                                    url: '/Admins/Product/Delete',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: {
+                                        id: id
+                                    },
+                                    beforeSend: function () {
+
+                                    },
+                                    success: function (res) {
+                                        if (res == true) {
+                                            if ($('#Id').val() == 0)
+                                                toastr.success("Xóa thành công");
+                                        }
+                                        else {
+                                            toastr.error("Xóa thất bại");
+                                        }
+                                    },
+                                    error: function () {
+
+                                    },
+                                    complete: function () {
+                                        GetViewData(pageNumber, '');
+                                    }
+                                })
+                                swal("Bạn đã xóa thành công !", {
+                                    icon: "success",
+                                });
+                            } else {
+                                swal("Hủy tác vụ");
+                            }
+                        });
+
+                })
+
+            }
+        })
+    </script>
+}

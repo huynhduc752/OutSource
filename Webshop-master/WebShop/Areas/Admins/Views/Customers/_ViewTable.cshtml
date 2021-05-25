@@ -1,0 +1,116 @@
+﻿@* đón dữ liệu từ controller*@
+@model IEnumerable<WebShop.Models.Customer>
+
+<table class="table table-hover table-responsive-md">
+    <thead>
+        <tr>
+            <th>Tài khoản</th>
+            <th>Tên Kh</th>
+            <th>SDT</th>
+            <th>Email</th>
+            <th>Trạng thái</th>
+            <th>Tác vụ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.Name</td>
+                <td>@item.Phone</td>
+                <td>@item.Email</td>
+                @if (item.Status == true)
+                {
+                    <td><span class="badge badge-success">Hoạt động</span></td>
+                }
+                else
+                {
+                    <td><span class="badge badge-danger">Ngừng hoạt động</span></td>
+                }
+
+                <td>
+                    <button class="btnInfo bg-info" data-id="@item.Id" data-toggle="modal" data-target="#CategoryDetail"><i class="fas fa-info-circle"></i></button>
+                    <button class="btnEdit bg-warning" data-id="@item.Id" ><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btnDelete bg-danger" data-id="@item.Id"><i class="far fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+    <tfoot>
+
+    </tfoot>
+
+</table>
+
+<div class="pagination-container">
+    <ul class="pagination">
+        @if (ViewBag.countPage <= 4)
+        {
+            for (int index = 1; index <= ViewBag.countPage; index++)
+            {
+                if (index == ViewBag.pageNumber)
+                {
+                    <li class="active"><a data-index="@index">@index</a></li>
+                }
+                else
+                {
+                    <li><a data-index="@index">@index</a></li>
+                }
+            }
+        }
+        else
+        {
+            if (ViewBag.pageNumber <= 2)
+            {
+                for (int index = 1; index <= 4; index++)
+                {
+                    if (index == ViewBag.pageNumber)
+                    {
+                        <li class="active"><a data-index="@index">@index</a></li>
+                    }
+                    else
+                    {
+                        <li><a data-index="@index">@index</a></li>
+                    }
+                }
+                <li><a class="nextPage" data-index="@ViewBag.countPage"><i class="fas fa-chevron-right"></i></a></li>
+            }
+            else if (ViewBag.pageNumber >= ViewBag.countPage - 2)
+            {
+                <li><a class="prevPage" data-index="1"><i class="fas fa-chevron-left"></i></a></li>
+
+                for (int index = ViewBag.countPage - 3; index <= ViewBag.countPage; index++)
+                {
+                    if (index == ViewBag.pageNumber)
+                    {
+                        <li class="active"><a data-index="@index">@index</a></li>
+                    }
+                    else
+                    {
+                        <li><a data-index="@index">@index</a></li>
+                    }
+                }
+            }
+            else
+            {
+                <li><a class="prevPage" data-index="1"><i class="fas fa-chevron-left"></i></a></li>
+                for (int index = ViewBag.pageNumber - 1; index <= ViewBag.pageNumber + 2; index++)
+                {
+                    if (index == ViewBag.pageNumber)
+                    {
+                        <li class="active"><a data-index="@index">@index</a></li>
+                    }
+                    else
+                    {
+                        <li><a data-index="@index">@index</a></li>
+                    }
+                }
+                <li><a class="nextPage" data-index="@ViewBag.countPage"><i class="fas fa-chevron-right"></i></a></li>
+            }
+        }
+
+    </ul>
+</div>

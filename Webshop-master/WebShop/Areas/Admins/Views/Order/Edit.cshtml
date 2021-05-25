@@ -1,0 +1,260 @@
+﻿@model WebShop.Models.Order
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admins/Views/Shared/_Layout.cshtml";
+    var customer = ViewBag.Customer as IEnumerable<WebShop.Models.Customer>;
+    var product = ViewBag.Product as IEnumerable<WebShop.Models.Product>;
+    var orderDetail = ViewBag.OrderDetail as IEnumerable<WebShop.ViewModel.OrderDetailViewModel>;
+}
+<style>
+    .input-group-text {
+        min-width: 150px !important;
+    }
+
+    .select2-selection {
+        height: 38px !important;
+        outline: none !important;
+        min-width: 350px;
+        border-color: #ced4da !important;
+    }
+
+    .select2-selection__arrow {
+        display: none;
+    }
+
+    .select2-dropdown {
+        min-width: 350px;
+    }
+
+    textarea {
+        outline: none;
+        border-color: #ced4da;
+    }
+
+    td:last-child {
+        text-align: end !important;
+    }
+</style>
+<div class="obj-product ml-2 mr-2">
+    <div>
+        <h3>Thêm mới hóa đơn sản phẩm</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="number" id="Id" name="Id" value="@Model.Id" hidden>
+
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Khách hàng</span>
+                </div>
+                <select class="js-example-basic-single" name="CustomerId">
+                    @foreach (var item in customer)
+                    {
+                        <option value="@item.Id" @if (Model.CustomerId == item.Id) {<text>selected</text> } >@item.Name - @item.Phone</option>
+                    }
+                </select>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Chọn sản phẩm</span>
+                </div>
+                <select class="js-example-basic-single" id="ProductId">
+                    @foreach (var item in product)
+                    {
+                        <option value="@item.Id" data-price="@item.Price">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Số lượng</span>
+                </div>
+                <input type="number" name="Stock" value="0" class="form-control" style="max-width:350px" />
+            </div>
+
+            <div>
+                <button class="btn btn-default btnAdd">Thêm sản phẩm</button>
+            </div>
+
+            <div class="mt-3 mb-3">
+                <p>Ghi chú hóa đơn</p>
+                <textarea class="w-100" name="Note" rows="7">@Model.Note</textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Trạng thái</span>
+                </div>
+                <select name="Status" class="form-control ">
+                    <option value="0" @if (Model.Status == 0) {<text>selected</text> } >Đã xong</option>
+                    <option value="1" @if (Model.Status == 1) {<text>selected</text> }>Chưa duyệt</option>
+                    <option value="2" @if (Model.Status == 2) {<text>selected</text> }>Hủy</option>
+                </select>
+            </div>
+
+            <div class="submit d-flex justify-content-end m-2 mt-5">
+                <button class="btnCreate btn btn-success ">Cập nhật hóa đơn</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <p style="text-align:right"><b>Tổng số hóa đơn : <span class="totalPrice" data-total="0">0</span> VND</b></p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Tác vụ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in orderDetail)
+                    {
+                        <tr>
+                            <td data-id="@item.order.ProductId">@item.productName</td>
+                            <td>@item.order.Stock</td>
+                            <td>@item.order.Price</td>
+                            <td><span class="badge badge-danger delete-item">Xóa</span></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/Admin/lib/select2/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // select 2
+            $('.js-example-basic-single').select2();
+            // back
+            $('.btnBack').click(function () {
+                location.href = '/Admins/Order/Index'
+            })
+            let total = 0;
+            $('tbody tr').each(function () {
+                let stock = $(this).children('td:nth-child(2)').html();
+                let price = $(this).children('td:nth-child(3)').html();
+
+                total = total * 1 + (stock * price);
+            })
+            $('.totalPrice').attr('data-total', total);
+            $('.totalPrice').html('');
+            $('.totalPrice').append(total);
+
+        })
+
+        AddProduct();
+        AddOrUpdate();
+        DeleteItem();
+        function AddProduct() {
+            $('.btnAdd').click(function () {
+                let productId = $("#ProductId").val();
+                let productName = $('#ProductId option:selected').text();
+                let price = $('#ProductId option:selected').attr('data-price');
+                let stock = $('input[name=Stock]').val();
+
+                let row = `<tr style="display: none;">
+                                                    <td data-id="${productId}">${productName}</td>
+                                                    <td>${stock}</td>
+                                                    <td>${price}</td>
+                                                    <td><span class="badge badge-danger delete-item">Xóa</span></td>
+                                                </tr>`;
+                if (stock > 0) {
+                    $('tbody').append(row);
+                    $('tbody tr:last-child').fadeIn();
+
+                    let total = $('.totalPrice').attr('data-total');
+                    total = total * 1 + stock * price;
+
+                    $('.totalPrice').attr('data-total', total);
+                    $('.totalPrice').html('');
+                    $('.totalPrice').append(total);
+
+                }
+                else
+                    toastr.warning("Cần nhập số lượng lớn hơn 0");
+
+                DeleteItem();
+            })
+        }
+
+        function DeleteItem() {
+            $('.delete-item').click(function () {
+                $(this).parent().parent('tr').remove();
+
+                let total = 0;
+                $('tbody tr').each(function () {
+                    let stock = $(this).children('td:nth-child(2)').html();
+                    let price = $(this).children('td:nth-child(3)').html();
+
+                    total = total * 1 + (stock * price);
+                })
+                $('.totalPrice').attr('data-total', total);
+                $('.totalPrice').html('');
+                $('.totalPrice').append(total);
+            })
+        }
+
+        function AddOrUpdate() {
+            $('.btnCreate').click(function () {
+                // sản phẩm
+                let order = new Object();
+                order["Id"] = $('#Id').val();
+                order["CustomerId"] = $('select[name=CustomerId]').val();
+                order["Note"] = $('textarea[name=Note]').val();
+                order["Status"] = $('select[name=Status]').val();
+                // ảnh của sản phẩm
+                let orderDetail = [];
+                $('tbody tr').each(function () {
+                    let obj = new Object();
+                    obj["ProductId"] = $(this).children('td:first-child').attr('data-id');
+                    obj["Stock"] = $(this).children('td:nth-child(2)').text();
+                    obj["Price"] = $(this).children('td:nth-child(3)').text();
+                    orderDetail.push(obj);
+                })
+
+                $.ajax({
+                    url: '/Admins/Order/AddOrUpdate',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        order: order,
+                        orderDetail: orderDetail
+                    }),
+                    beforeSend: function () {
+
+                    },
+                    success: function (res) {
+                        if (res == true) {
+                            if ($('#Id').val() == 0)
+                                toastr.success("Thêm thành công");
+                            else
+                                toastr.success("Sửa thành công");
+                        }
+                        else {
+                            if ($('#Id').val() == 0)
+                                toastr.error("Thêm thất bại");
+                            else
+                                toastr.error("Sửa thất bại");
+                        }
+                    },
+                    error: function () {
+
+                    },
+                    complete: function () {
+                    }
+                })
+            })
+        }
+    </script>
+}

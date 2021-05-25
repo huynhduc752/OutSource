@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<section class="contact-us container mb-5">
+    <div class="row align-items-center">
+        <div class="col-12">
+            <div class="text-center head-title my-5">
+                <h4>
+                    LIÊN HỆ VỚI CHÚNG TÔI
+                </h4>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="items-contact">
+                <img src="~/Content/Upload/news/part_of_curnon_4-rLR.jpg" />
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="items-contact">
+                    <div class="my-3">
+                        <input type="text" name="Name" placeholder="Họ và Tên" class="form-control" />
+                    </div>
+                    <div class="my-3">
+                        <input type="text" name="Phone" placeholder="Số Điện Thoại" class="form-control" />
+                    </div>
+                    <div class="my-3">
+                        <input type="text" name="Email" placeholder="Email" class="form-control" />
+                    </div>
+                    <div class="my-3">
+                        <input type="text" name="Address" placeholder="Địa Chỉ" class="form-control" />
+                    </div>
+                    <div class="my-3">
+                        <textarea class="w-100 form-control" rows="5" placeholder="Nội Dung" style="resize:none"></textarea>
+                    </div>
+                    <div class="my-3">
+                        <button class="w-100 bg-black text-white btnSubmit">
+                            Đăng ký ngay
+                        </button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+
+        $.ajax({
+            url: '/Home/GetLoginCustomer',
+            type: 'post',
+            dataType: 'json',
+            data: {
+
+            },
+            success: function (res) {
+                if (res != null) {
+                    $('.items-contact input[name=Name]').val(res.Name);
+                    $('.items-contact input[name=Phone]').val(res.Phone);
+                    $('.items-contact input[name=Email]').val(res.Email);
+                    $('.items-contact input[name=Address]').val(res.Address);
+                    $('.btnSubmit').html('');
+                    $('.btnSubmit').html('Cập nhật thông tin');
+                }
+
+            },
+            error: function (error) {
+
+            }
+        })
+
+        Subscribe();
+        function Subscribe() {
+            $('.btnSubmit').click(function () {
+                let name = $('.items-contact input[name=Name]').val();
+                let email = $('.items-contact input[name=Email]').val();
+                let phone = $('.items-contact input[name=Phone]').val();
+                let address = $('.items-contact input[name=Address]').val();
+                let customer = new Object();
+                customer["Name"] = name;
+                customer["Email"] = email;
+                customer["Phone"] = phone;
+                customer["Address"] = address;
+                debugger
+                if (name == "" || email == "" || phone == "" || address == "") {
+                    alert("không được để trống");
+                }
+                else {
+                    $.ajax({
+                        url: '/Home/SubcribeUser',
+                        dataType: 'json',
+                        type: 'post',
+                        data: {
+                            customer: customer
+                        },
+                        success: function (res) {
+                            if (res)
+                                alert("đăng ký tài khoản thành công");
+                        }
+                    })
+                }
+            })
+        }
+    </script>
+}

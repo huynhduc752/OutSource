@@ -1,0 +1,235 @@
+*{
+    margin: 0 ;
+    padding: 0;
+    outline: none;
+    font-family: "Roboto-Regular";
+}
+button:focus{
+    outline: none; 
+}
+ul{
+    list-style: none;
+    
+}
+
+/*Color Group*/
+/* Start */
+.overture {
+    background-color: rgba(55,155,220,1) !important;
+}
+
+.gerbera {
+    background-color: rgba(40,190,100,1) !important;
+}
+
+.punch-line {
+    background-color: rgba(230,75,60,1) !important;
+}
+
+.tomboy {
+    background-color: rgba(240,195,15,1) !important;
+}
+
+.ragtime {
+    background-color: rgba(25,190,155,1) !important;
+}
+
+.helter-skelter {
+    background-color: rgba(230,125,35,1) !important;
+}
+
+.buster-arm {
+    background-color: rgba(120,50,210,1) !important;
+}
+
+/*End Color Group*/
+
+.img{
+    display: flex;  
+    align-items: center;  
+    justify-content: center;
+    overflow: hidden;    
+}
+.img img{
+    min-width: 100%;  
+    min-height: 100%; 
+    max-width: 120%;  
+}
+.small-text {
+    font-size: .9em;  
+}
+.select2{
+    width: 100% !important; 
+    
+}
+.select2-container .select2-selection--single{
+    height: auto ;
+    padding: .5em  ;
+}
+.select2-container--default .select2-selection--single{
+    border: 0 solid #ffffff;  
+    border-radius: 0;   
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    top: 8px;  
+    right: 8px;
+}
+
+header{
+    padding: 1em 0 1px 0 ;  
+    background: linear-gradient(40deg ,#003580 , #45cafc) !important;  
+}
+header .title{
+    font-size: 1.8em;   
+    color: #fff;   
+    font-family: "Roboto-Bold";
+}
+header .title span{
+    font-family: "Roboto-Bold";
+    color:  #60ccff;  
+}
+header .title:hover{
+    text-decoration: none;  
+}
+header.fixed{
+    position: fixed;
+    top: 0;  
+    left: 0 ;
+    width: 100% ;
+    background: #fff;
+    z-index: 99;  
+}
+header .menu li{
+    margin-right: 3em; 
+    padding: .2em  0 .8em 0 ;  
+    border-bottom: 3px solid transparent; 
+}
+header .menu li:hover, header .menu li.active{
+    border-bottom: 2px solid #fff;  
+}
+header .m-user a{
+    background: transparent;  
+    border: 1px solid transparent;
+    margin-left: 1em;  
+    padding: .3em 1em .2em 1em;    
+    border-radius: 4px; 
+    font-size: .8em;
+    background: #ffffff; 
+    color: #1f4287;
+    font-family: "Roboto-Bold";     
+    display: inline-block; 
+    opacity: 1; 
+}
+header .m-user a:hover{
+    text-decoration: none; 
+    box-shadow: 0 0 4px #fff; 
+}
+header .m-user a.bg-transparent{
+    color:  #ffffff; 
+    border-color: #ffffff;  
+}
+header .menu li a{
+    color: #fff; 
+}
+header .menu li a i{
+    margin-right: .5em;  
+}
+header .menu li a:hover{
+    text-decoration: none;   
+}
+header .logo span{
+    font-size: 2em; 
+    font-family: "Nunito-Bold";
+}
+
+.box-search{
+    position: relative;  
+}
+.box-search button{
+    position: absolute;  
+    border: none;  
+    background: transparent;  
+    top: 50%;  
+    right: 1em;
+    font-size: 1.2em;  
+    color: #cccccc;   
+    transform: translateY(-50%); 
+    cursor: pointer;  
+}
+.box-search input{
+    padding: .4em 1.5em ; 
+    width: 22em;
+    border-radius: 3em;  
+    border: none;  
+    background: #f7f7f7;  
+}
+.box-search input::placeholder{
+    color: #636363;  
+    font-size: .9em;  
+}
+.footer{
+    padding :4em 0 2em 0;  
+    background: #24324a; 
+}
+footer h5{
+   margin-bottom: 1em; 
+   font-size: 1.2em;  
+   color: #fff; 
+}
+footer ul li a , footer .desc{
+    color: #d4d4d4; 
+    font-size: .9em;  
+}
+footer ul li a:hover{
+    text-decoration: none; 
+    color: #ffffff;  
+}
+footer .contact li{
+    display: flex; 
+    justify-content: center;  
+    align-items:center;  
+    margin-right: 1em; 
+    font-size: .9em;  
+    width: 2.5em; 
+    height: 2.5em;  
+    background: #fff;  
+    border-radius: 50%;   
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+}
+footer .contact li:hover a {
+    color: #24324a;
+}
+footer .coppy-right{
+    padding: .4em;  
+    font-size: .9em;  
+    color: #fff; 
+    background: #1d273a; 
+}
+@media only screen and (min-width: 1200px) {
+    html{
+        font-size: 14px ;
+    }
+    
+}
+@media only screen and (min-width: 1200px) {
+    html{
+        font-size: 16px ;
+    }
+    
+}
+@media only screen and (min-width: 1450px) {
+/*     html{
+        font-size: 16px ;
+    }
+    .container{
+        max-width: 1320px;  
+    } */
+}
+@media only screen and (min-width: 1600px) {
+/*     html{
+        font-size: 20px ;
+    }
+    .container{
+        max-width: 1440px;  
+    } */
+  }

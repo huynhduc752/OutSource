@@ -1,0 +1,44 @@
+@font-face {
+    font-family: "Nunito-Light";
+    src: url('../font/Nunito/Nunito-Light.ttf');
+}
+@font-face {
+    font-family: "Nunito-Regular";
+    src: url('../font/Nunito/Nunito-Regular.ttf');
+}
+@font-face {
+    font-family: "Nunito-SemiBold";
+    src: url('../font/Nunito/Nunito-SemiBold.ttf');
+}
+@font-face {
+    font-family: "Nunito-Bold";
+    src: url('../font/Nunito/Nunito-Bold.ttf');
+}
+
+
+@font-face {
+    font-family: "Roboto-Light";
+    src: url('../font/Roboto/Roboto-Light.ttf');
+}
+@font-face {
+    font-family: 'Roboto-Thin';
+    src: url('../font/Roboto/Roboto-Thin.ttf');
+}
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url('../font/Roboto/Roboto-Regular.ttf');
+}
+@font-face {
+    font-family: 'Roboto-Medium';
+    src: url('../font/Roboto/Roboto-Medium.ttf');
+}
+@font-face {
+    font-family: "Roboto-Bold";
+    src: url('../font/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Roboto-Black";
+    src: url('../font/Roboto/Roboto-Black.ttf');
+}
+

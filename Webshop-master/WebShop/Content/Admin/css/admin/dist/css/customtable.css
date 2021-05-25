@@ -1,0 +1,21 @@
+﻿.data-table table {
+    border: 1px solid #dee2e6;
+}
+
+        .data-table table tr td:first-child, table tr th:first-child {
+            text-align: start;
+        }
+
+        .data-table table tr td:last-child, table tr th:last-child {
+            text-align: end;
+        }
+.main-form .data-table button{
+    border : none;
+    color : white !important;
+    outline :none;
+    border-radius : 2px;
+}
+
+.input-group-text {
+    min-width: 100px !important;
+}

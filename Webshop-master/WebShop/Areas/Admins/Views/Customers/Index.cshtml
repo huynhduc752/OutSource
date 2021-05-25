@@ -1,0 +1,345 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admins/Views/Shared/_Layout.cshtml";
+}
+<div class="data-content ml-2 mr-2">
+    <div class="row pb-2 pt-3">
+        <div class="title-form col-md-8">
+            <h3 class="m-0">Quản lý danh mục khách hàng</h3>
+        </div>
+        <div class="col-md-4 header-data d-flex justify-content-between">
+            <input class="searchInput form-control mr-2 w-75" name="search" placeholder="Nhập để tìm kiếm" />
+            <button class="btn btnAdd btn-primary w-25">Thêm mới</button>
+        </div>
+    </div>
+    <div class="main-form row">
+        <div class="col-md-8 data-table " id="viewTable">
+            @*đây là table*@
+        </div>
+        <div class="col-md-4 form-data">
+            <div class="title" style="background:#479697">
+                <h6 class="text-white align-self-center p-3 m-0">Nhập/Sửa danh mục khách hàng</h6>
+            </div>
+            <div class="main-form bg-white p-2 pb-4">
+
+                <input type="number" name="Id" id="Id" value="0" hidden>
+
+                <div class="form-group mt-2">
+                    <label>[Tên KH]</label>
+                    <input type="text" class="form-control" name="Name" placeholder="Nhập tên Kh">
+                </div>
+
+                <div class="form-group mt-2">
+                    <label>[Tên tài khoản]</label>
+                    <input type="text" class="form-control" name="UserName" placeholder="User name">
+                </div>
+
+                <div class="form-group mt-2">
+                    <label>[Mật khẩu]</label>
+                    <input type="text" class="form-control" name="Password" placeholder="Password">
+                </div>
+
+                <div class="form-group mt-2">
+                    <input type="radio" name="Gender" id="Male" checked /><label class="ml-1 mr-3" for="Male">Nam</label>
+                    <input type="radio" name="Gender" id="Female" /><label class="ml-1 mr-3" for="Female">Nữ</label>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label>[Email]</label>
+                    <input type="text" class="form-control" name="Email" placeholder="Nhập tên danh mục" />
+                </div>
+
+                <div class="form-group mt-2">
+                    <label>[Phone]</label>
+                    <input type="number" class="form-control" name="Phone" placeholder="Nhập số thứ tự" />
+                </div>
+
+                <div class="form-group mt-2">
+                    <label>[Địa chỉ]</label>
+                    <input type="text" class="form-control" name="Address" value="" />
+                </div>
+
+                <div class="form-group mt-2">
+                    <input type="radio" name="Status" id="IsActive" checked /><label class="ml-1 mr-3" for="IsActive">Hoạt động</label>
+                    <input type="radio" name="Status" id="NotActive" /><label class="ml-1 mr-3" for="NotActive">Không Hoạt động</label>
+                </div>
+
+                <div class="list-button d-flex justify-content-end">
+                    <button class="btn btnCancel btn-secondary">Hủy bỏ</button>
+                    <button class="btn btnUpdate btn-success ml-3">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="view-detail">
+        <div class="modal fade" id="CategoryDetail" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Chi tiết danh mục sản phẩm</h5>
+                        <button type="button" class="close" data-dismiss="modal" style="outline:none">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+            let pageNumber = 1;
+            $('.btnAdd').click(function () {
+                RefeshForm();
+            })
+            $('.btnCancel').click(function () {
+                RefeshForm();
+            })
+            // action
+            // view data
+            GetViewData(1, '');
+            AddOrUpdate();
+            Search();
+
+
+            // view ra table data
+            function GetViewData(pageNumber, search) {
+                $.ajax({
+                    url: '/Admins/Customers/_ViewTable',
+                    type: 'post',
+                    dataType: 'html',
+                    data: {
+                        pageNumber: pageNumber,
+                        search: search
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (res) {
+                        $('#viewTable').html('');
+                        $('#viewTable').html(res);
+                        $('.main-form input[name=ParentId]').val($('#Parent').val())
+                    },
+                    error: function (error) {
+                    },
+                    complete: function () {
+                        SetObjectToForm();
+                        DeleteById();
+                        ChangePage();
+                        ViewDetail();
+                    }
+                })
+            }
+            // chuyển phân trang
+            function ChangePage() {
+                $('.pagination li a').click(function () {
+                    pageNumber = $(this).attr('data-index');
+                    let search = $(".searchInput").val();
+                    GetViewData(pageNumber, search);
+                })
+            }
+            // tìm kiếm
+            function Search() {
+                $('.searchInput').keyup(function () {
+                    let search = $(this).val();
+                    GetViewData(1, search);
+                })
+
+            }
+
+
+            // form update data
+            // get category by id
+            function SetObjectToForm() {
+                $('.btnEdit').click(function () {
+                    let Id = $(this).attr('data-id');
+                    $.ajax({
+                        url: '/Admins/Customers/GetCustomerById',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            id: Id
+                        },
+                        beforeSend: function () {
+
+                        },
+                        success: function (res) {
+                            let obj = res;
+                            $.each(obj, function (key, value) {
+
+                                if (key == "Status") {
+                                    if (value == true) {
+                                        $('#IsActive').prop('checked', true);
+                                    }
+                                    else {
+                                        $('#NotActive').prop('checked', true);
+                                    }
+                                }
+                                else if (key == 'Gender') {
+                                    if (value == true) {
+                                        $('#Male').prop('checked', true);
+                                    }
+                                    else {
+                                        $('#Female').prop('checked', true);
+                                    }
+                                }
+                                else {
+                                    $("input[name=" + key + "]").val(value);
+                                }
+                            })
+                        },
+                        error: function () {
+
+                        },
+                        complete: function () {
+
+                        }
+                    })
+                })
+            }
+
+
+            // form thêm danh mục
+            function AddOrUpdate() {
+                $('.btnUpdate').click(function () {
+                    let customer = new Object();
+                    $('.main-form input').each(function () {
+                        customer[$(this).attr('name')] = $(this).val();
+                    })
+                    customer["Gender"] = $("#Male").is(':checked');
+                    customer["Status"] = $("#IsActive").is(':checked');
+                    $.ajax({
+                        url: '/Admins/Customers/AddOrUpdate',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            customer: customer
+                        },
+                        beforeSend: function () {
+
+                        },
+                        success: function (res) {
+                            if (res == true) {
+                                if ($('#Id').val() == 0)
+                                    toastr.success("Thêm thành công");
+                                else
+                                    toastr.success("Sửa thành công");
+                                RefeshForm();
+                            }
+                            else {
+                                if ($('#Id').val() == 0)
+                                    toastr.error("Thêm thất bại");
+                                else
+                                    toastr.error("Sửa thất bại");
+                            }
+                        },
+                        error: function () {
+
+                        },
+                        complete: function () {
+                            GetViewData(pageNumber, '');
+                        }
+                    })
+                })
+            }
+
+
+            // xem chi tiết
+            function ViewDetail() {
+                $('.btnInfo').click(function () {
+                    let id = $(this).attr('data-id');
+                    $.ajax({
+                        url: '/Admins/Customers/_ViewDetail',
+                        dataType: 'html',
+                        type: 'post',
+                        data: {
+                            id: id
+                        },
+                        success: function (res) {
+                            console.log(res);
+                            $('.modal-body').html('');
+                            $('.modal-body').html(res);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+
+                    })
+
+                })
+            }
+
+
+            // xóa
+            function DeleteById() {
+                $('.btnDelete').click(function () {
+                    swal({
+                        title: "Bạn có chắc muốn xóa không?",
+                        text: "Dữ liệu xóa không thể khôi phục lại!",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                let id = $(this).attr('data-id');
+                                $.ajax({
+                                    url: '/Admins/Customers/Delete',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: {
+                                        id: id
+                                    },
+                                    beforeSend: function () {
+
+                                    },
+                                    success: function (res) {
+                                        if (res == true) {
+                                            if ($('#Id').val() == 0)
+                                                toastr.success("Xóa thành công");
+                                        }
+                                        else {
+                                            toastr.error("Xóa thất bại");
+                                        }
+                                    },
+                                    error: function () {
+
+                                    },
+                                    complete: function () {
+                                        GetViewData(pageNumber, '');
+                                    }
+                                })
+                                swal("Bạn đã xóa thành công !", {
+                                    icon: "success",
+                                });
+                            } else {
+                                swal("Hủy tác vụ");
+                            }
+                        });
+
+                })
+
+            }
+
+
+            function RefeshForm() {
+                $('.main-form input').each(function () {
+                    $(this).val('');
+                })
+                $('#Id').val(0);
+                $('#Male').prop('checked', true);
+                $('#IsActive').prop('checked', true);
+            }
+        })
+    </script>
+}

@@ -1,0 +1,249 @@
+﻿
+@{ ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<section class="cart container">
+    <div class="text-center head-title my-5">
+        <h4>
+            GIỎ HÀNG CỦA BẠN
+        </h4>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class=" cart-left">
+                <div class="title-cart d-flex justify-content-between text-center">
+                    <div class="w-25">
+                        <h6>Sản Phẩm</h6>
+                    </div>
+                    <div class="w-25">
+                        <h6>Số Lượng</h6>
+                    </div>
+                    <div class="w-25">
+                        <h6>Thành Tiền</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="list-cart cart-right py-2">
+                <div class="tinh-tien my-1 px-3 pb-3">
+                    <div class="just-pay d-flex justify-content-between pt-2 pb-2">
+                        <div>TỔNG GIÁ TRỊ (VNĐ)</div>
+                        <div class="d-flex">
+                            <h6 class="money" id="tongTriGia" data-value="0">0</h6><sup style="font-weight:bold">vnđ</sup>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3 luu-y">
+                    <div>
+                        <h6> Lưu ý / </h6>
+                        <div class="d_note-content">
+                            <ul class="ml-4">
+                                <li>
+                                    Giá này chưa bao gồm 10% VAT
+                                </li>
+                                <li>
+                                    Giao hàng trên toàn quốc
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="py-3">
+                        <h6>Khuyến mãi đi kèm đơn hàng / </h6>
+                        <div class="d_note-content">
+                            <ul class="ml-4">
+                                <li>
+                                    Miễn phí vận chuyển toàn quốc.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="btn-end  py-3">
+                        <div class="w-100 pt-2 pb-2 text-center confirm bg-black">
+                            <a class="login text-white btnOk">XÁC NHẬN ĐƠN HÀNG<i class="ml-2 fas fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            function Change() {
+                $('.number-add').click(function () {
+                    // tổng tiền
+                    let temp = $('#tongTriGia').attr('data-value');
+                    let res = $(this).siblings('.value-pro').attr('data-value');  // số lượng
+                    let mon = $(this).siblings('.value-pro').attr('data-pay');   // tiền của sản phẩm
+                    let money = parseInt(mon);  // tiền sản phẩm
+                    let pay = parseInt(temp);   // tổng tiền ban đầu
+                    let payment = pay + money;  // sau khi update
+                    res++;                      // số lượng  + 1
+                    let sum = res * money;      // tổng tiền 1 dòng
+                    $('#tongTriGia').attr('data-value', payment);
+                    $(this).siblings('.value-pro').attr('data-value', res);
+                    debugger;
+                    $(this).siblings('.value-pro').text(res);
+
+                    $(this).parent().parent().siblings('.money').children('.thanh-tien').attr('data-money', sum);
+                    let dataDefault = $(this).parent().parent().siblings('.money').children('.thanh-tien').attr('data-money');
+                    let result = '$' + parseFloat(dataDefault, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString().substr(0,);
+                    let show = result.substr(0, result.length - 2);
+                    console.log(show);
+                    $(this).parent().parent().siblings('.money').children('.thanh-tien').children('.here').text(show);
+                    let var1 = '$' + parseFloat(payment, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString().substr(0,);
+                    let showVar1 = var1.substr(0, var1.length - 2);
+                    $('#tongTriGia').text(showVar1);
+                })
+                $('.number-sub').click(function () {
+                    let temp = $('#tongTriGia').attr('data-value');
+                    let res = $(this).siblings('.value-pro').attr('data-value');
+                    let mon = $(this).siblings('.value-pro').attr('data-pay');
+                    let money = parseInt(mon);
+                    let pay = parseInt(temp);
+                    if (res > 0) {
+                        let payment = pay - money;
+                        res--;
+                        let sum = res * money;
+                        $('#tongTriGia').attr('data-value', payment);
+                        $(this).siblings('.value-pro').attr('data-value', res);
+                        debugger;
+                        $(this).siblings('.value-pro').text(res);
+                        $(this).parent().parent().siblings('.money').children('.thanh-tien').attr('data-money', sum);
+                        let dataDefault = $(this).parent().parent().siblings('.money').children('.thanh-tien').attr('data-money');
+                        let result = '$' + parseFloat(dataDefault, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString().substr(0,);
+                        let show = result.substr(0, result.length - 2);
+                        console.log(show);
+                        $(this).parent().parent().siblings('.money').children('.thanh-tien').children('.here').text(show);
+
+                        let var1 = '$' + parseFloat(payment, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString().substr(0,);
+                        let showVar1 = var1.substr(0, var1.length - 2);
+                        $('#tongTriGia').text(showVar1);
+                    }
+
+                })
+            }
+            GetList();
+            function GetList() {
+                $.ajax({
+                    url: '/Home/GetListOrder',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+
+                    },
+                    success: function (res) {
+                        let row = ``;
+                        let price = 0;
+                        console.log(res);
+                        $(res).each(function (index, item) {
+                            price += item.o.Price * item.o.Stock;
+                            row += `   <div class="item d-flex justify-content-between align-items-center justify-content-center py-3">
+                                                            <div class="w-25 avt-pro">
+                                                                <div class="w-75 mx-auto">
+                                                                    <img src="${item.p.Image}" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-50 so-luong ">
+                                                                <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
+                                                                    <span class="number-add py-1 px-2">
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </span>
+                                                                    <span class="value-pro number-pro" data-value="${item.o.Stock}" data-pay="${item.p.Price}" data-id="${item.p.Id}">${item.o.Stock}</span>
+                                                                    <span class="number-sub py-1 px-2">
+                                                                        <i class="fas fa-minus"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-25 money mx-auto text-center">
+                                                                <div class="mx-3 py-1 thanh-tien">
+                                                                    <span class="here" id="price-default" data-default="${item.p.Price}">${item.p.Price}</span><sup>vnđ</sup>
+                                                                </div>
+                                                            </div>
+                                                        </div>`;
+                        });
+                        $('.cart-left').append(row);
+                        debugger;
+
+                        $('#tongTriGia').html('');
+                        let result = '$' + parseFloat(price, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString().substr(0,);
+                        let show = result.substr(0, result.length - 2);
+                        console.log(show);
+                       
+                        $('#tongTriGia').attr('data-value', price);
+                        $('#tongTriGia').text(show);
+                        debugger;
+                        let mn = $('#price-default').attr('data-default');
+                        let ex = '$' + parseFloat(mn, 10).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,").toString();
+                        let txt = ex.substr(0, ex.length - 2);
+                        $('#price-default').text(txt);
+                        console.log("ok", txt);
+                        Change();
+                    }
+                })
+            }
+
+            Order();
+            function Order() {
+                $('.btnOk').click(function () {
+                    // check cookies
+                    $.ajax({
+                        url: '/Home/GetLoginCustomer',
+                        type: 'post',
+                        dataType: 'json',
+                        async: false,
+                        data: {
+
+                        },
+                        success: function (res) {
+                            if (res == false) {
+                                location.href = '/Home/Contact'
+                            }
+                        },
+                        error: function (error) {
+
+                        }
+                    })
+
+
+                    let orderDetail = [];
+                    $('.cart-left .item').each(function (index, item) {
+                        let obj = new Object();
+                        obj["Stock"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-value');
+                        obj["Price"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-pay');
+                        obj["ProductId"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-id');
+                        orderDetail.push(obj);
+                    })
+                    console.log(orderDetail);
+
+                    $.ajax({
+                        url: '/Home/Order',
+                        type: 'post',
+                        async: false,
+                        dataType: 'json',
+                        data: {
+                            orderDetail: orderDetail
+                        },
+                        success: function (res) {
+                            if (res == true) {
+                                alert("Đặt hàng thành công")
+                            }
+
+                        },
+                        error: function (error) {
+
+                        }
+                    })
+                })
+            }
+
+       
+
+                });
+
+
+    </script>
+}

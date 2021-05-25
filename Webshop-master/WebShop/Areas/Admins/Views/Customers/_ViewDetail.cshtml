@@ -1,0 +1,62 @@
+﻿@model WebShop.Models.Customer
+<table>
+    <tr>
+        <td>Tên KH: </td>
+        <td>@Model.Name </td>
+    </tr>
+    <tr>
+        <td>User Name: </td>
+        <td>@Model.UserName </td>
+    </tr>
+    <tr>
+        <td>Giới tính: </td>
+        @if (Model.Gender == true)
+        {
+            <td>Nam</td>
+        }
+        else
+        {
+            <td>Nữ</td>
+        }
+    </tr>
+    <tr>
+        <td>Phone: </td>
+        <td>@Model.Phone </td>
+    </tr>
+    <tr>
+        <td>Email: </td>
+        <td>@Model.Email </td>
+    </tr>
+    <tr>
+        <td>Địa chỉ: </td>
+        <td>@Model.Address </td>
+    </tr>
+    <tr>
+        <td>Người tạo: </td>
+        <td>@Model.CreatedBy </td>
+    </tr>
+    <tr>
+        <td>Ngày tạo: </td>
+        <td>@Model.CreatedDate </td>
+    </tr>
+    <tr>
+        <td>Người cập nhật: </td>
+        <td>@Model.UpdatedBy </td>
+    </tr>
+    <tr>
+        <td>Ngày cập nhật: </td>
+        <td>@Model.UpdatedDate </td>
+    </tr>
+
+    <tr>
+        <td>Trạng thái: </td>
+        @if (Model.Status == true)
+        {
+            <td>Hoạt động</td>
+        }
+        else
+        {
+            <td>Ngừng hoạt động</td>
+        }
+    </tr>
+</table>
