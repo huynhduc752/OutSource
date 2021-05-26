@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebShop.Models;
@@ -242,14 +243,13 @@ namespace WebShop.Controllers
 
             string infy = info.Parent.FullName;
             var path = Server.MapPath(Url.Content("~/SendEmail/SendMail.html"));
-            using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(path,Encoding.UTF8))
             {
                 htmlBody = reader.ReadToEnd();
                 htmlBody = htmlBody.Replace("{{Email}}", obj.email);
                 htmlBody = htmlBody.Replace("{{name}}", obj.name);
                 htmlBody = htmlBody.Replace("{{address}}", obj.address);
                 htmlBody = htmlBody.Replace("{{phone}}", obj.phone);
-
             }
             var mes = new MailMessage("huynhducmadridista@gmail.com", obj.email)
             {
@@ -258,7 +258,7 @@ namespace WebShop.Controllers
             };
             mes.IsBodyHtml = true;
             mes.Body = htmlBody;
-
+            mes.BodyEncoding = Encoding.UTF8;
             try
             {
                 smtp.Send(mes);
