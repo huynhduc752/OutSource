@@ -31,10 +31,10 @@ namespace WebShop.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Product_Image> Product_Image { get; set; }
-        public virtual DbSet<ProductSize> ProductSizes { get; set; }
         public virtual DbSet<Size> Sizes { get; set; }
-        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
+        public virtual DbSet<ProductSize> ProductSizes { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
     }
 }

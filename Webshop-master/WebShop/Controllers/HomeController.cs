@@ -46,6 +46,7 @@ namespace WebShop.Controllers
 
             ViewBag.image = productImage;
             ViewBag.size = productSize;
+            ViewBag.productSize = size;
             return View(product);
         }
 
@@ -82,11 +83,14 @@ namespace WebShop.Controllers
                 List<OrderDetail> order = JsonConvert.DeserializeObject<List<OrderDetail>>(httpCookie.Value);
 
                 var data = (from o in order
-                            join p in _db.Products on o.ProductId equals p.Id
+                            join ps in _db.ProductSizes on o.ProductSizeId equals ps.Id
+                            join p in _db.Products on ps.ProductId equals p.Id
+                            join s in _db.Sizes on ps.Size equals s.Id
                             select new
                             {
                                 o,
-                                p
+                                p,
+                                ps,s
                             }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -205,9 +209,16 @@ namespace WebShop.Controllers
                 _db.OrderDetails.AddRange(orderDetail);
                 _db.SaveChanges();
 
+                foreach (var item in orderDetail)
+                {
+                    var obj = _db.ProductSizes.Find(item.ProductSizeId);
+                    obj.Stock -= item.Stock;
+                    _db.SaveChanges();
+                }
+
                 // xóa giỏ hàng cũ
                 var cookies = Request.Cookies["Cart"];
-                cookies.Expires = DateTime.Now.AddMinutes(1);
+                cookies.Expires = DateTime.Now.AddMinutes(-1);
 
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

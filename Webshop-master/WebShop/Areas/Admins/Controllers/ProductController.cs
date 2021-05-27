@@ -123,7 +123,6 @@ namespace WebShop.Areas.Admins.Controllers
 
                     // xóa data cũ
                     _db.Product_Image.RemoveRange(_db.Product_Image.Where(x => x.ProductId == product.Id).ToList());
-                    _db.ProductSizes.RemoveRange(_db.ProductSizes.Where(x => x.ProductId == product.Id).ToList());
                     if (product_Images != null)
                     {
                         product_Images = product_Images.Select(x => { x.ProductId = product.Id; return x; }).ToList();
@@ -131,8 +130,18 @@ namespace WebShop.Areas.Admins.Controllers
                     }
                     if (productSizes != null)
                     {
-                        productSizes = productSizes.Select(x => { x.ProductId = product.Id; return x; }).ToList();
-                        _db.ProductSizes.AddRange(productSizes);
+                        foreach(var item in productSizes)
+                        {
+                            if(item.Id > 0)
+                            {
+                                _db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            else
+                            {
+                                item.ProductId = product.Id;
+                                _db.ProductSizes.Add(item);
+                            }
+                        }
                     }
                     // cập nhật lại data
                     _db.SaveChanges();

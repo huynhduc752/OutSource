@@ -10,5 +10,6 @@ namespace WebShop.ViewModel
     {
         public OrderDetail order { get; set; }
         public string productName { get; set; }
+        public string sizeName { get; set; }
     }
 }

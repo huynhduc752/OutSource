@@ -58,13 +58,23 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Chọn sản phẩm</span>
                 </div>
-                <select class="js-example-basic-single" id="ProductId">
+                <select class="js-example-basic-single" id="ProductId" onchange="ChooseProduct(this)">
+                    <option value="0">Mời bạn chọn sản phẩm</option>
                     @foreach (var item in product)
                     {
                         <option value="@item.Id" data-price="@item.Price">@item.Name</option>
                     }
                 </select>
             </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Chọn Size</span>
+                </div>
+                <select class="js-example-basic-single" id="SizeId">
+                </select>
+            </div>
+
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Số lượng</span>
@@ -101,6 +111,7 @@
                 <thead>
                     <tr>
                         <th>Sản phẩm</th>
+                        <th>Size</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
                         <th>Tác vụ</th>
@@ -129,35 +140,90 @@
             })
         })
 
+        function ChooseProduct(el) {
+            let id = $(el).val();
+            if (id == 0) {
+                let row = `<option value="0">Mời bạn chọn size sản phẩm</option>`;
+                $('#SizeId').html('');
+                $('#SizeId').append(row);
+                return;
+            }
+            $.ajax({
+                url: '/Admins/Order/GetSizeOfProduct',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    Id: id
+                }),
+                beforeSend: function () {
+
+                },
+                success: function (res) {
+                    let row = `<option value="0">Mời bạn chọn size sản phẩm</option>`;
+                    $(res).each(function (index, item) {
+                        row += `<option value="${item.ps.Id}" data-size="${item.size.Name}" data-stock="${item.ps.Stock}">${item.size.Name}(Số lượng : ${item.ps.Stock})</option>`
+                    })
+                    $('#SizeId').html('');
+                    $('#SizeId').append(row);
+                },
+                error: function () {
+
+                },
+                complete: function () {
+                }
+            })
+
+        }
+
         AddProduct();
         AddOrUpdate();
         function AddProduct() {
             $('.btnAdd').click(function () {
-                let productId = $("#ProductId").val();
-                let productName = $('#ProductId option:selected').text();
-                let price = $('#ProductId option:selected').attr('data-price');
-                let stock = $('input[name=Stock]').val();
-
-                let row = `<tr style="display: none;">
-                                                                <td data-id="${productId}">${productName}</td>
-                                                                <td>${stock}</td>
-                                                                <td>${price}</td>
-                                                                <td><span class="badge badge-danger delete-item">Xóa</span></td>
-                                                            </tr>`;
-                if (stock > 0) {
-                    $('tbody').append(row);
-                    $('tbody tr:last-child').fadeIn();
-
-                    let total = $('.totalPrice').attr('data-total');
-                    total = total * 1 + stock * price;
-
-                    $('.totalPrice').attr('data-total', total);
-                    $('.totalPrice').html('');
-                    $('.totalPrice').append(total);
+                let productSizeId = $('#SizeId').val();
+                let check = true;
+                $('tbody tr').each(function (i, e) {
+                    if ($(e).children('td:first-child').attr('data-id') == productSizeId) {
+                        check = false;
+                    }
+                })
+                if (!check) {
+                    toastr.warning("Bạn đã chọn option này rồi !!");
+                    return;
                 }
-                else
-                    toastr.warning("Cần nhập số lượng lớn hơn 0");
-                DeleteItem();
+
+                let maxStock = $('#SizeId option:selected').attr('data-stock');
+                if (productSizeId > 0) {
+                    let productName = $('#ProductId option:selected').text();
+                    let price = $('#ProductId option:selected').attr('data-price');
+                    let stock = $('input[name=Stock]').val();
+                    let size = $('#SizeId option:selected').attr('data-size')
+                    let row = `<tr style="display: none;">
+                                                <td data-id="${productSizeId}">${productName}</td>
+                                                <td>${size}</td>
+                                                <td>${stock}</td>
+                                                <td>${price}</td>
+                                                <td><span class="badge badge-danger delete-item">Xóa</span></td>
+                                            </tr>`;
+                    if (stock > 0 && stock <= maxStock) {
+                        $('tbody').append(row);
+                        $('tbody tr:last-child').fadeIn();
+
+                        let total = $('.totalPrice').attr('data-total');
+                        total = total * 1 + stock * price;
+
+                        $('.totalPrice').attr('data-total', total);
+                        $('.totalPrice').html('');
+                        $('.totalPrice').append(total);
+                    }
+                    else
+                        toastr.warning("Cần nhập số lượng lớn hơn 0 và nhỏ hơn " + maxStock);
+                    DeleteItem();
+                }
+                else {
+                    toastr.warning("Bạn cần chọn sản phẩm và size");
+                }
+
             })
         }
         function DeleteItem() {
@@ -181,6 +247,7 @@
             $('.btnCreate').click(function () {
                 // sản phẩm
                 let order = new Object();
+                order["Id"] = $('#Id').val();
                 order["CustomerId"] = $('select[name=CustomerId]').val();
                 order["Note"] = $('textarea[name=Note]').val();
                 order["Status"] = $('select[name=Status]').val();
@@ -188,45 +255,44 @@
                 let orderDetail = [];
                 $('tbody tr').each(function () {
                     let obj = new Object();
-                    obj["ProductId"] = $(this).children('td:first-child').attr('data-id');
-                    obj["Stock"] = $(this).children('td:nth-child(2)').text();
-                    obj["Price"] = $(this).children('td:nth-child(3)').text();
+                    obj["ProductSizeId"] = $(this).children('td:first-child').attr('data-id');
+                    obj["Stock"] = $(this).children('td:nth-child(3)').text();
+                    obj["Price"] = $(this).children('td:nth-child(4)').text();
                     orderDetail.push(obj);
                 })
-                console.log(orderDetail);
 
-                //$.ajax({
-                //    url: '/Admins/Order/AddOrUpdate',
-                //    type: 'post',
-                //    dataType: 'json',
-                //    contentType: 'application/json',
-                //    data: JSON.stringify({
-                //        order: order,
-                //        orderDetail: orderDetail
-                //    }),
-                //    beforeSend: function () {
+                $.ajax({
+                    url: '/Admins/Order/AddOrUpdate',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        order: order,
+                        orderDetail: orderDetail
+                    }),
+                    beforeSend: function () {
 
-                //    },
-                //    success: function (res) {
-                //        if (res == true) {
-                //            if ($('#Id').val() == 0)
-                //                toastr.success("Thêm thành công");
-                //            else
-                //                toastr.success("Sửa thành công");
-                //        }
-                //        else {
-                //            if ($('#Id').val() == 0)
-                //                toastr.error("Thêm thất bại");
-                //            else
-                //                toastr.error("Sửa thất bại");
-                //        }
-                //    },
-                //    error: function () {
+                    },
+                    success: function (res) {
+                        if (res == true) {
+                            if ($('#Id').val() == 0)
+                                toastr.success("Thêm thành công");
+                            else
+                                toastr.success("Sửa thành công");
+                        }
+                        else {
+                            if ($('#Id').val() == 0)
+                                toastr.error("Thêm thất bại");
+                            else
+                                toastr.error("Sửa thất bại");
+                        }
+                    },
+                    error: function () {
 
-                //    },
-                //    complete: function () {
-                //    }
-                //})
+                    },
+                    complete: function () {
+                    }
+                })
             })
         }
     </script>

@@ -72,41 +72,41 @@
                 </select>
             </div>
 
+            <textarea class="ckeditor" name="Description" id="Description">@Html.Raw(Model.Description)</textarea>
+
+            <div class="status mt-3">
+                <input type="radio" name="Status" id="IsActive" @if (Model.Status == true) { <text> checked</text>} value="" />
+                <label for="IsActive" class="mr-2">Hoạt động</label>
+                <input type="radio" name="Status" id="NotActive" value="" @if (Model.Status == false) { <text> checked</text>} />
+                <label for="NotActive" class="">Không hoạt động</label>
+            </div>
+
             <div class="list-size mb-2">
-                <h6 class="bg-secondary p-1">Chọn các size còn lại</h6>
+                <h6 class="p-1">Chọn các size còn lại</h6>
                 <div class="d-flex flex-wrap">
                     @foreach (var item in size)
                     {
-                        var check = false;
-                        foreach (var choose in chooseSize)
+                        if (chooseSize.Where(x => x.Size == item.Id).FirstOrDefault() != null)
                         {
-                            if (item.Id == choose.Size)
-                            {
-                                check = true;
-                                <div class="d-block p-2 mr-1 mb-1 border-secondary item-size bg-success" style="min-width:50px;text-align:center;" data-id="@item.Id">
-                                    @item.Name
+                            <div class="item-size input-group mb-3" data-id="@(chooseSize.Where(x=>x.Size == item.Id).FirstOrDefault().Id)" data-size="@item.Id">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@item.Name</span>
                                 </div>
-                            }
+                                <input type="number" class="form-control" value="@(chooseSize.Where(x=>x.Size == item.Id).FirstOrDefault().Stock)" min="0">
+                            </div>
                         }
-                        if (!check)
+                        else
                         {
-                            <div class="d-block border border-secondary p-2 mr-1 mb-1 item-size" style="min-width:50px;text-align:center;" data-id="@item.Id">
-                                @item.Name
+                            <div class="item-size input-group mb-3" data-id="0" data-size="@item.Id">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">@item.Name</span>
+                                </div>
+                                <input type="number" class="form-control" value="0" min="0">
                             </div>
                         }
 
                     }
-
                 </div>
-            </div>
-
-            <textarea class="ckeditor" name="Description" id="Description">@Html.Raw(Model.Description)</textarea>
-
-            <div class="status mt-3">
-                <input type="radio" name="Status" id="IsActive" @if (Model.Status == true) { <text>checked</text>} value="" />
-                <label for="IsActive" class="mr-2">Hoạt động</label>
-                <input type="radio" name="Status" id="NotActive" value="" @if (Model.Status == false) { <text>checked</text>} />
-                <label for="NotActive" class="">Không hoạt động</label>
             </div>
 
         </div>
@@ -151,7 +151,6 @@
 
         ChooseImage();
         DeleteImage();
-        ChooseSize();
         ChooseMainImage();
         AddOrUpdate();
         function ChooseMainImage() {
@@ -196,13 +195,6 @@
             })
         }
 
-        function ChooseSize() {
-            $('.item-size').click(function () {
-                $(this).toggleClass('bg-success');
-                $(this).toggleClass('border');
-            })
-        }
-
         function AddOrUpdate() {
             $('.btnCreate').click(function () {
                 // sản phẩm
@@ -228,12 +220,13 @@
                 let dataSize = [];
                 $('.list-size .item-size').each(function () {
                     let objSize = new Object();
-                    if ($(this).hasClass('bg-success')) {
-                        let sizeId = $(this).attr('data-id');
-                        objSize["Size"] = sizeId;
-                        objSize["ProductId"] = 0;
-                        dataSize.push(objSize);
-                    }
+                    let Id = $(this).attr('data-id');
+                    let sizeId = $(this).attr('data-size');
+                    objSize["Id"] = Id;
+                    objSize["Size"] = sizeId;
+                    objSize["ProductId"] = 0;
+                    objSize["Stock"] = $(this).children('input').val();
+                    dataSize.push(objSize);
                 })
 
                 $.ajax({

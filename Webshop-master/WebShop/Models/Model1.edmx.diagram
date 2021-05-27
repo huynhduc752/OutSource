@@ -11,11 +11,11 @@
         <EntityTypeShape EntityType="WebShopModel.Customer" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebShopModel.Product" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebShopModel.Product_Image" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebShopModel.ProductSize" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebShopModel.Size" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebShopModel.OrderDetail" Width="1.5" PointX="5.375" PointY="9.75" />
         <EntityTypeShape EntityType="WebShopModel.Order" Width="1.5" PointX="7.375" PointY="9.75" />
         <EntityTypeShape EntityType="WebShopModel.Config" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="WebShopModel.ProductSize" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="WebShopModel.OrderDetail" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

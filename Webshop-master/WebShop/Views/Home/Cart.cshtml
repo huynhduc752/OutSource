@@ -9,11 +9,14 @@
         </h4>
     </div>
     <div class="row">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-8">
             <div class=" cart-left">
                 <div class="title-cart d-flex justify-content-between text-center">
                     <div class="w-25">
                         <h6>Sản Phẩm</h6>
+                    </div>
+                    <div class="w-25">
+                        <h6>Size</h6>
                     </div>
                     <div class="w-25">
                         <h6>Số Lượng</h6>
@@ -24,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-6">
+        <div class="col-12 col-lg-4">
             <div class="list-cart cart-right py-2">
                 <div class="tinh-tien my-1 px-3 pb-3">
                     <div class="just-pay d-flex justify-content-between pt-2 pb-2">
@@ -81,6 +84,10 @@
                     let money = parseInt(mon);  // tiền sản phẩm
                     let pay = parseInt(temp);   // tổng tiền ban đầu
                     let payment = pay + money;  // sau khi update
+                    if (res == $(this).siblings('.value-pro').attr('data-max')) {
+                        alert("Số lượng sản phẩm chỉ còn " + $(this).siblings('.value-pro').attr('data-max'))
+                        return;
+                    }
                     res++;                      // số lượng  + 1
                     let sum = res * money;      // tổng tiền 1 dòng
                     $('#tongTriGia').attr('data-value', payment);
@@ -147,12 +154,15 @@
                                                                         <img src="${item.p.Image}" />
                                                                     </div>
                                                                 </div>
+                                                                <div class="w-25 text-center">
+                                                                        ${item.s.Name}
+                                                                </div>
                                                                 <div class="w-50 so-luong ">
                                                                     <div class="d-flex justify-content-between w-50 align-items-center tool-nụmber mx-auto">
                                                                         <span class="number-add py-1 px-2">
                                                                             <i class="fas fa-plus"></i>
                                                                         </span>
-                                                                        <span class="value-pro number-pro" data-value="${item.o.Stock}" data-pay="${item.p.Price}" data-id="${item.p.Id}">${item.o.Stock}</span>
+                                                                        <span class="value-pro number-pro" data-max="${item.ps.Stock}" data-value="${item.o.Stock}" data-pay="${item.p.Price}" data-id="${item.ps.Id}">${item.o.Stock}</span>
                                                                         <span class="number-sub py-1 px-2">
                                                                             <i class="fas fa-minus"></i>
                                                                         </span>
@@ -214,7 +224,7 @@
                         let obj = new Object();
                         obj["Stock"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-value');
                         obj["Price"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-pay');
-                        obj["ProductId"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-id');
+                        obj["ProductSizeId"] = $(this).children('.so-luong').children('div').children('.value-pro').attr('data-id');
                         orderDetail.push(obj);
                     })
                     console.log(orderDetail);

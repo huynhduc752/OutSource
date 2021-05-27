@@ -17,5 +17,6 @@ namespace WebShop.Models
         public int Id { get; set; }
         public Nullable<int> ProductId { get; set; }
         public Nullable<int> Size { get; set; }
+        public Nullable<int> Stock { get; set; }
     }
 }

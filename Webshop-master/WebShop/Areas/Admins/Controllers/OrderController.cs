@@ -70,17 +70,34 @@ namespace WebShop.Areas.Admins.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult GetSizeOfProduct(int Id)
+        {
+            var data = (from size in _db.Sizes
+                        join ps in _db.ProductSizes on size.Id equals ps.Size
+                        where ps.ProductId == Id
+                        select new
+                        {
+                            size,
+                            ps
+                        }).ToList();
+            return Json(data);
+        }
+
         public ActionResult Edit(int id)
         {
             ViewBag.Customer = _db.Customers.Where(x => x.IsDeleted == false).ToList();
             ViewBag.Product = _db.Products.Where(x => x.IsDeleted == false).ToList();
             ViewBag.OrderDetail = (from o in _db.OrderDetails
-                                   join p in _db.Products on o.ProductId equals p.Id
+                                   join ps in _db.ProductSizes on o.ProductSizeId equals ps.Id
+                                   join p in _db.Products on ps.ProductId equals p.Id
+                                   join s in _db.Sizes on ps.Size equals s.Id
                                    where o.OrderId == id
                                    select new OrderDetailViewModel
                                    {
                                        order = o,
-                                       productName = p.Name
+                                       productName = p.Name,
+                                       sizeName = s.Name
                                    }).ToList();
             var model = _db.Orders.FirstOrDefault(x => x.Id == id);
             return View(model);
@@ -105,6 +122,12 @@ namespace WebShop.Areas.Admins.Controllers
                     }
                     _db.OrderDetails.AddRange(orderDetail);
                     _db.SaveChanges();
+                    foreach (var item in orderDetail)
+                    {
+                        var obj = _db.ProductSizes.Find(item.ProductSizeId);
+                        obj.Stock -= item.Stock;
+                        _db.SaveChanges();
+                    }
                 }
                 else
                 {
@@ -115,14 +138,27 @@ namespace WebShop.Areas.Admins.Controllers
                     cus.UpdatedDate = DateTime.Now;
                     _db.SaveChanges();
 
-                    _db.OrderDetails.RemoveRange(_db.OrderDetails.Where(x => x.OrderId == cus.Id).ToList());
+                    var old = _db.OrderDetails.Where(x => x.OrderId == cus.Id).ToList();
+                    foreach (var item in old)
+                    {
+                        var obj = _db.ProductSizes.Find(item.ProductSizeId);
+                        obj.Stock += item.Stock;
+                        _db.SaveChanges();
+                    }
+                    _db.OrderDetails.RemoveRange(old);
                     if (orderDetail != null)
                     {
-                        orderDetail = orderDetail.Select(x => { x.OrderId = order.Id; return x; }).ToList();
+                        orderDetail = orderDetail.Select(x => { x.OrderId = cus.Id; return x; }).ToList();
                     }
                     // cập nhật lại data
                     _db.OrderDetails.AddRange(orderDetail);
                     _db.SaveChanges();
+                    foreach(var item in orderDetail)
+                    {
+                        var obj = _db.ProductSizes.Find(item.ProductSizeId);
+                        obj.Stock -= item.Stock;
+                        _db.SaveChanges();
+                    }
                 }
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -136,12 +172,15 @@ namespace WebShop.Areas.Admins.Controllers
         public PartialViewResult _ViewDetail(int id)
         {
             ViewBag.OrderDetail = (from o in _db.OrderDetails
-                                   join p in _db.Products on o.ProductId equals p.Id
+                                   join ps in _db.ProductSizes on o.ProductSizeId equals ps.Id
+                                   join p in _db.Products on ps.ProductId equals p.Id
+                                   join s in _db.Sizes on ps.Size equals s.Id
                                    where o.OrderId == id
                                    select new OrderDetailViewModel
                                    {
                                        order = o,
-                                       productName = p.Name
+                                       productName = p.Name,
+                                       sizeName = s.Name
                                    }).ToList();
 
             var data = (from o in _db.Orders.ToList()
@@ -149,7 +188,7 @@ namespace WebShop.Areas.Admins.Controllers
                             on o.AdminId equals a.Id
                         join c in _db.Customers.ToList()
                         on o.CustomerId equals c.Id
-                        where o.Id == id && o.IsDeleted == false 
+                        where o.Id == id && o.IsDeleted == false
                         select new OrderViewModel
                         {
                             order = o,

@@ -62,6 +62,7 @@
                 <thead>
                     <tr>
                         <th>Sản phẩm</th>
+                        <th>Size</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
                     </tr>
@@ -73,11 +74,12 @@
                     @foreach (var item in Detail)
                     {
                         current += (int)item.order.Price;
-                        <tr>
-                            <td data-id="@item.order.ProductId">@item.productName</td>
-                            <td>@item.order.Stock</td>
-                            <td>@item.order.Price</td>
-                        </tr>
+                    <tr>
+                        <td data-id="@item.order.ProductSizeId">@item.productName</td>
+                        <td>@item.sizeName</td>
+                        <td>@item.order.Stock</td>
+                        <td>@item.order.Price</td>
+                    </tr>
                     }
                 </tbody>
                 <tfoot>

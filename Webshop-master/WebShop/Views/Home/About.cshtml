@@ -1,5 +1,17 @@
 ﻿@model WebShop.Models.Product
-@{ ViewBag.Title = "About"; }
+@{
+    ViewBag.Title = "About";
+    var productSize = ViewBag.productSize as IEnumerable<WebShop.Models.ProductSize>;
+    var size = ViewBag.size as IEnumerable<WebShop.Models.Size>;
+}
+<style>
+    .can-select.active{
+        border-color : lightgreen; 
+    }
+    .size-pro{
+        cursor:pointer;
+    }
+</style>
 <section class="page-detail container my-5">
     <div class="information">
         <div class="row">
@@ -12,9 +24,10 @@
 
                                 @foreach (var item in ViewBag.image as IEnumerable<WebShop.Models.Product_Image>)
                                 {
-                    <a href="@item.Image">
-                        <img class="xzoom-gallery5" width="80" src="@item.Image" title="The description goes here">
-                    </a>}
+                                    <a href="@item.Image">
+                                        <img class="xzoom-gallery5" width="80" src="@item.Image" title="The description goes here">
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -33,10 +46,26 @@
                 <hr />
                 <div class="my-3 d-flex">
                     <h6 class="mr-4 w-25">Size: </h6>
+                    <input type="hidden" name="CheckSize" value="0" />
                     <div>
-                        @foreach (var item in ViewBag.size as IEnumerable<WebShop.Models.Size>)
+                        @foreach (var item in size)
                         {
-            <span class="size-pro py-1 px-3">@item.Name</span>}
+                            if (productSize.Where(x => x.Size == item.Id).FirstOrDefault() != null)
+                            {
+                                if (productSize.Where(x => x.Size == item.Id).FirstOrDefault().Stock > 0)
+                                {
+                                    <span class="size-pro py-1 px-3 can-select" data-id="@productSize.Where(x => x.Size == item.Id).FirstOrDefault().Id" data-stock="@productSize.Where(x => x.Size == item.Id).FirstOrDefault().Stock">@item.Name</span>
+                                }
+                                else
+                                {
+                                    <span class="size-pro py-1 px-3 bg-secondary" data-stock="0">@item.Name</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="size-pro py-1 px-3 bg-secondary" data-stock="0">@item.Name</span>
+                            }
+                        }
                     </div>
                 </div>
                 <div class="my-3 d-flex">
@@ -45,11 +74,10 @@
                         <span class="number-add py-1 px-3">
                             <i class="fas fa-plus"></i>
                         </span>
-                        <span class="value-pro" data-value="1" data-stock="@Model.Stock">1</span>
+                        <span class="value-pro" data-value="1" data-stock="0">1</span>
                         <span class="number-sub py-1 px-3">
                             <i class="fas fa-minus"></i>
                         </span>
-
                     </div>
                 </div>
                 <hr />
@@ -105,25 +133,43 @@
 @section scripts{
 
     <script>
+        SelectSize();
+        function SelectSize() {
+            $('.can-select').click(function () {
+                $('.can-select').removeClass('active');
+                $(this).addClass('active');
+                $('input[name=CheckSize]').val($(this).attr('data-id'));
+                $('.value-pro').attr('data-stock', $(this).attr('data-stock'));
+                $('.value-pro').attr('data-value', 1);
+                $('.value-pro').text(1);
+            })
+        }
+
         AddCart();
         function AddCart() {
             $('.btn-add').click(function () {
-                let orderDetail = new Object();
-                orderDetail["ProductId"] = $('input[name=Id]').val();
-                orderDetail["Price"] = $('.price').attr('data-price');
-                orderDetail["Stock"] = $('span.value-pro').attr('data-value') == 0 ? "1" : $('span.value-pro').attr('data-value');
-                console.log(orderDetail);
-                $.ajax({
-                    url: '/Home/AddToCart',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {
-                        orderDetail: orderDetail
-                    },
-                    success: function (res) {
-                        alert("ok");
-                    }
-                })
+                if ($('input[name=CheckSize]').val() > 0) {
+                    let orderDetail = new Object();
+                    orderDetail["ProductSizeId"] = $('input[name=CheckSize]').val();
+                    orderDetail["Price"] = $('.price').attr('data-price');
+                    orderDetail["Stock"] = $('span.value-pro').attr('data-value') == 0 ? "1" : $('span.value-pro').attr('data-value');
+                    console.log(orderDetail);
+                    $.ajax({
+                        url: '/Home/AddToCart',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            orderDetail: orderDetail
+                        },
+                        success: function (res) {
+                            alert("ok");
+                        }
+                    })
+                }
+                else {
+                    alert("Bạn cần chọn size sản phẩm");
+                }
+
             })
         }
     </script>

@@ -50,7 +50,7 @@
                 <select class="js-example-basic-single" name="CustomerId">
                     @foreach (var item in customer)
                     {
-                        <option value="@item.Id" @if (Model.CustomerId == item.Id) {<text>selected</text> } >@item.Name - @item.Phone</option>
+                        <option value="@item.Id" @if (Model.CustomerId == item.Id) { <text> selected</text> }>@item.Name - @item.Phone</option>
                     }
                 </select>
             </div>
@@ -60,13 +60,23 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Chọn sản phẩm</span>
                 </div>
-                <select class="js-example-basic-single" id="ProductId">
+                <select class="js-example-basic-single" id="ProductId" onchange="ChooseProduct(this)">
+                    <option value="0">Mời bạn chọn sản phẩm</option>
                     @foreach (var item in product)
                     {
                         <option value="@item.Id" data-price="@item.Price">@item.Name</option>
                     }
                 </select>
             </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Chọn Size</span>
+                </div>
+                <select class="js-example-basic-single" id="SizeId">
+                </select>
+            </div>
+
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Số lượng</span>
@@ -88,9 +98,9 @@
                     <span class="input-group-text">Trạng thái</span>
                 </div>
                 <select name="Status" class="form-control ">
-                    <option value="0" @if (Model.Status == 0) {<text>selected</text> } >Đã xong</option>
-                    <option value="1" @if (Model.Status == 1) {<text>selected</text> }>Chưa duyệt</option>
-                    <option value="2" @if (Model.Status == 2) {<text>selected</text> }>Hủy</option>
+                    <option value="0" @if (Model.Status == 0) { <text> selected</text> }>Đã xong</option>
+                    <option value="1" @if (Model.Status == 1) { <text> selected</text> }>Chưa duyệt</option>
+                    <option value="2" @if (Model.Status == 2) { <text> selected</text> }>Hủy</option>
                 </select>
             </div>
 
@@ -104,6 +114,7 @@
                 <thead>
                     <tr>
                         <th>Sản phẩm</th>
+                        <th>Size</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
                         <th>Tác vụ</th>
@@ -113,7 +124,8 @@
                     @foreach (var item in orderDetail)
                     {
                         <tr>
-                            <td data-id="@item.order.ProductId">@item.productName</td>
+                            <td data-id="@item.order.ProductSizeId">@item.productName</td>
+                            <td>@item.sizeName</td>
                             <td>@item.order.Stock</td>
                             <td>@item.order.Price</td>
                             <td><span class="badge badge-danger delete-item">Xóa</span></td>
@@ -139,54 +151,94 @@
             $('.btnBack').click(function () {
                 location.href = '/Admins/Order/Index'
             })
-            let total = 0;
-            $('tbody tr').each(function () {
-                let stock = $(this).children('td:nth-child(2)').html();
-                let price = $(this).children('td:nth-child(3)').html();
-
-                total = total * 1 + (stock * price);
-            })
-            $('.totalPrice').attr('data-total', total);
-            $('.totalPrice').html('');
-            $('.totalPrice').append(total);
-
         })
+
+        function ChooseProduct(el) {
+            let id = $(el).val();
+            if (id == 0) {
+                let row = `<option value="0">Mời bạn chọn size sản phẩm</option>`;
+                $('#SizeId').html('');
+                $('#SizeId').append(row);
+                return;
+            }
+            $.ajax({
+                url: '/Admins/Order/GetSizeOfProduct',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    Id: id
+                }),
+                beforeSend: function () {
+
+                },
+                success: function (res) {
+                    let row = `<option value="0">Mời bạn chọn size sản phẩm</option>`;
+                    $(res).each(function (index, item) {
+                        row += `<option value="${item.ps.Id}" data-size="${item.size.Name}" data-stock="${item.ps.Stock}">${item.size.Name}(Số lượng : ${item.ps.Stock})</option>`
+                    })
+                    $('#SizeId').html('');
+                    $('#SizeId').append(row);
+                },
+                error: function () {
+
+                },
+                complete: function () {
+                }
+            })
+
+        }
 
         AddProduct();
         AddOrUpdate();
-        DeleteItem();
         function AddProduct() {
             $('.btnAdd').click(function () {
-                let productId = $("#ProductId").val();
-                let productName = $('#ProductId option:selected').text();
-                let price = $('#ProductId option:selected').attr('data-price');
-                let stock = $('input[name=Stock]').val();
+                let productSizeId = $('#SizeId').val();
+                let check = true;
+                $('tbody tr').each(function (i, e) {
+                    if ($(e).children('td:first-child').attr('data-id') == productSizeId) {
+                        check = false;
+                    }
+                })
+                if (!check) {
+                    toastr.warning("Bạn đã chọn option này rồi !!");
+                    return;
+                }
 
-                let row = `<tr style="display: none;">
-                                                    <td data-id="${productId}">${productName}</td>
+                let maxStock = $('#SizeId option:selected').attr('data-stock');
+                if (productSizeId > 0) {
+                    let productName = $('#ProductId option:selected').text();
+                    let price = $('#ProductId option:selected').attr('data-price');
+                    let stock = $('input[name=Stock]').val();
+                    let size = $('#SizeId option:selected').attr('data-size')
+                    let row = `<tr style="display: none;">
+                                                    <td data-id="${productSizeId}">${productName}</td>
+                                                    <td>${size}</td>
                                                     <td>${stock}</td>
                                                     <td>${price}</td>
                                                     <td><span class="badge badge-danger delete-item">Xóa</span></td>
                                                 </tr>`;
-                if (stock > 0) {
-                    $('tbody').append(row);
-                    $('tbody tr:last-child').fadeIn();
+                    if (stock > 0 && stock <= maxStock) {
+                        $('tbody').append(row);
+                        $('tbody tr:last-child').fadeIn();
 
-                    let total = $('.totalPrice').attr('data-total');
-                    total = total * 1 + stock * price;
+                        let total = $('.totalPrice').attr('data-total');
+                        total = total * 1 + stock * price;
 
-                    $('.totalPrice').attr('data-total', total);
-                    $('.totalPrice').html('');
-                    $('.totalPrice').append(total);
-
+                        $('.totalPrice').attr('data-total', total);
+                        $('.totalPrice').html('');
+                        $('.totalPrice').append(total);
+                    }
+                    else
+                        toastr.warning("Cần nhập số lượng lớn hơn 0 và nhỏ hơn " + maxStock);
+                    DeleteItem();
                 }
-                else
-                    toastr.warning("Cần nhập số lượng lớn hơn 0");
+                else {
+                    toastr.warning("Bạn cần chọn sản phẩm và size");
+                }
 
-                DeleteItem();
             })
         }
-
         function DeleteItem() {
             $('.delete-item').click(function () {
                 $(this).parent().parent('tr').remove();
@@ -216,9 +268,9 @@
                 let orderDetail = [];
                 $('tbody tr').each(function () {
                     let obj = new Object();
-                    obj["ProductId"] = $(this).children('td:first-child').attr('data-id');
-                    obj["Stock"] = $(this).children('td:nth-child(2)').text();
-                    obj["Price"] = $(this).children('td:nth-child(3)').text();
+                    obj["ProductSizeId"] = $(this).children('td:first-child').attr('data-id');
+                    obj["Stock"] = $(this).children('td:nth-child(3)').text();
+                    obj["Price"] = $(this).children('td:nth-child(4)').text();
                     orderDetail.push(obj);
                 })
 
