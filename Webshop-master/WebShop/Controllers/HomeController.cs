@@ -90,7 +90,8 @@ namespace WebShop.Controllers
                             {
                                 o,
                                 p,
-                                ps,s
+                                ps,
+                                s
                             }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
@@ -220,6 +221,10 @@ namespace WebShop.Controllers
                 var cookies = Request.Cookies["Cart"];
                 cookies.Expires = DateTime.Now.AddMinutes(-1);
 
+                var check = SendMail(order, orderDetail);
+
+                // gửi mail ở đây
+
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -235,7 +240,10 @@ namespace WebShop.Controllers
             public string name { get; set; }
             public string address { get; set; }
             public string phone { get; set; }
+            public string cart { get; set; }
+            public string str { get; set; }
         }
+
         public JsonResult ConfirmEmail(Obj obj)
         {
             var smtp = new SmtpClient
@@ -254,13 +262,14 @@ namespace WebShop.Controllers
 
             string infy = info.Parent.FullName;
             var path = Server.MapPath(Url.Content("~/SendEmail/SendMail.html"));
-            using (StreamReader reader = new StreamReader(path,Encoding.UTF8))
+            using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
             {
                 htmlBody = reader.ReadToEnd();
                 htmlBody = htmlBody.Replace("{{Email}}", obj.email);
                 htmlBody = htmlBody.Replace("{{name}}", obj.name);
                 htmlBody = htmlBody.Replace("{{address}}", obj.address);
                 htmlBody = htmlBody.Replace("{{phone}}", obj.phone);
+
             }
             var mes = new MailMessage("huynhducmadridista@gmail.com", obj.email)
             {
@@ -279,6 +288,112 @@ namespace WebShop.Controllers
             {
                 return Json(false);
 
+            }
+        }
+        public JsonResult OrderMail(Obj obj)
+        {
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential("huynhducmadridista@gmail.com", "huynhduc752"),
+
+            };
+            var htmlBody = "";
+
+            DirectoryInfo info = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            string infy = info.Parent.FullName;
+            var path = Server.MapPath(Url.Content("~/SendEmail/OrderMail.html"));
+            using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
+            {
+                htmlBody = reader.ReadToEnd();
+                htmlBody = htmlBody.Replace("{{Email}}", obj.email);
+                htmlBody = htmlBody.Replace("{{name}}", obj.name);
+                htmlBody = htmlBody.Replace("{{address}}", obj.address);
+                htmlBody = htmlBody.Replace("{{phone}}", obj.phone);
+                htmlBody = htmlBody.Replace("{{content}}", obj.str);
+
+            }
+            var mes = new MailMessage("huynhducmadridista@gmail.com", obj.email)
+            {
+                Subject = " Curnone",
+                Body = ""
+            };
+            mes.IsBodyHtml = true;
+            mes.Body = htmlBody;
+            mes.BodyEncoding = Encoding.UTF8;
+            try
+            {
+                smtp.Send(mes);
+                return Json(true);
+            }
+            catch (Exception e)
+            {
+                return Json(false);
+
+            }
+        }
+
+        public bool SendMail(Order order, List<OrderDetail> orderDetail)
+        {
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential("huynhducmadridista@gmail.com", "huynhduc752"),
+
+            };
+            var htmlBody = "";
+
+            DirectoryInfo info = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+
+            string infy = info.Parent.FullName;
+            var date = DateTime.Now;
+            var path = Server.MapPath(Url.Content("~/SendEmail/SendMail.html"));
+            var customer = _db.Customers.Find(order.CustomerId);
+            string content = "";
+            foreach (var item in orderDetail)
+            {
+                var obj = _db.ProductSizes.Find(item.ProductSizeId);
+                var price = _db.Products.Find(obj.ProductId).Price;
+                var stock = item.Stock;
+                var name = _db.Products.Find(obj.ProductId).Name;
+                var size = _db.Sizes.Find(obj.Size).Name;
+                content += "<tr><td><div>"+name+"</div></td><td><div><span>price</span><span>" + price + "<sup>vnđ</sup></span></div><div><span>Sốlượng:" + stock + "</div></td></tr>";
+            }
+            using (StreamReader reader = new StreamReader(path, Encoding.UTF8))
+            {
+                htmlBody = reader.ReadToEnd();
+                htmlBody = htmlBody.Replace("{{Email}}", customer.Email);
+                htmlBody = htmlBody.Replace("{{name}}", customer.Name);
+                htmlBody = htmlBody.Replace("{{address}}", customer.Address);
+                htmlBody = htmlBody.Replace("{{phone}}", customer.Phone);
+                htmlBody = htmlBody.Replace("{{content}}", content);
+                htmlBody = htmlBody.Replace("{{date}}", date.ToString());
+            }
+            var mes = new MailMessage("huynhducmadridista@gmail.com", customer.Email)
+            {
+                Subject = " Curnone",
+                Body = ""
+            };
+            mes.IsBodyHtml = true;
+            mes.Body = htmlBody;
+            mes.BodyEncoding = Encoding.UTF8;
+            try
+            {
+                smtp.Send(mes);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

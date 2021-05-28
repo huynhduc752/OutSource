@@ -5,11 +5,12 @@
     var size = ViewBag.size as IEnumerable<WebShop.Models.Size>;
 }
 <style>
-    .can-select.active{
-        border-color : lightgreen; 
+    .can-select.active {
+        border-color: lightgreen;
     }
-    .size-pro{
-        cursor:pointer;
+
+    .size-pro {
+        cursor: pointer;
     }
 </style>
 <section class="page-detail container my-5">
@@ -47,23 +48,23 @@
                 <div class="my-3 d-flex">
                     <h6 class="mr-4 w-25">Size: </h6>
                     <input type="hidden" name="CheckSize" value="0" />
-                    <div>
+                    <div style="display:flex;  flex-wrap:wrap">
                         @foreach (var item in size)
                         {
                             if (productSize.Where(x => x.Size == item.Id).FirstOrDefault() != null)
                             {
                                 if (productSize.Where(x => x.Size == item.Id).FirstOrDefault().Stock > 0)
                                 {
-                                    <span class="size-pro py-1 px-3 can-select" data-id="@productSize.Where(x => x.Size == item.Id).FirstOrDefault().Id" data-stock="@productSize.Where(x => x.Size == item.Id).FirstOrDefault().Stock">@item.Name</span>
+                                    <span style="width: 5rem; margin-bottom:.25rem; margin-left:0.5rem; height:2.5rem; background-color:#fff" class="size-pro py-1 px-3 can-select" data-id="@productSize.Where(x => x.Size == item.Id).FirstOrDefault().Id" data-stock="@productSize.Where(x => x.Size == item.Id).FirstOrDefault().Stock">@item.Name</span>
                                 }
                                 else
                                 {
-                                    <span class="size-pro py-1 px-3 bg-secondary" data-stock="0">@item.Name</span>
+                                    <span style="width: 5rem; margin-bottom:.25rem; margin-left:0.5rem; height:2.5rem; background-color:#fff" class="size-pro py-1 px-3 bg-secondary" data-stock="0">@item.Name</span>
                                 }
                             }
                             else
                             {
-                                <span class="size-pro py-1 px-3 bg-secondary" data-stock="0">@item.Name</span>
+                                <span style="width: 5rem; margin-bottom:.25rem; margin-left:0.5rem; height:2.5rem; background-color:#fff" class="size-pro py-1 px-3 bg-secondary" data-stock="0">@item.Name</span>
                             }
                         }
                     </div>
